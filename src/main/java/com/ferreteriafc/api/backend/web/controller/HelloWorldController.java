@@ -9,16 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController()
 public class HelloWorldController {
 
-    @Autowired
-    private Environment env;
-
     @GetMapping()
     public String helloWorld() {
-        String username = env.getProperty("spring.datasource.username");
-        String password = env.getProperty("spring.datasource.password");
-        String url = env.getProperty("spring.datasource.url");
-
-        return "Hello World!".concat(" URL: " + url + " Username: " + username + " Password: " + password);
+        return "Hello World!";
     }
 
 }
