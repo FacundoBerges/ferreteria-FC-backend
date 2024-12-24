@@ -1,6 +1,6 @@
 package com.ferreteriafc.api.backend.web.controller;
 
-import com.ferreteriafc.api.backend.domain.service.CategoryService;
+import com.ferreteriafc.api.backend.domain.service.CategoryServiceImpl;
 import com.ferreteriafc.api.backend.domain.service.ICategoryService;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 
@@ -18,11 +18,11 @@ public class CategoryController {
     private final ICategoryService categoryService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryServiceImpl categoryService) {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<?> getAllCategories() {
         CategoryDTO dto = new CategoryDTO();
 
@@ -44,14 +44,14 @@ public class CategoryController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<?> addCategory(@RequestBody CategoryDTO category) {
         category.setCategoryId(1L);
 
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
     }
 
-    @PutMapping("/")
+    @PutMapping()
     public ResponseEntity<?> updateCategory(@RequestBody CategoryDTO category) {
         category.setCategoryId(1L);
         return new ResponseEntity<>(categoryService.update(category), HttpStatus.OK);
