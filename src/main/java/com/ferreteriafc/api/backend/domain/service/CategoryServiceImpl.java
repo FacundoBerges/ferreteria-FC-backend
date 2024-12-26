@@ -4,6 +4,8 @@ import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
 import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
+import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,9 @@ public class CategoryServiceImpl implements ICategoryService{
 
     @Override
     public CategoryDTO save(CategoryDTO categoryDto) {
+        if ( categoryRepository.existsByName( categoryDto.getCategoryName() ) )
+            throw new AlreadyExistException("Category already exist.");
+
         return categoryMapper.toCategoryDTO(
             categoryRepository.save(
                 categoryMapper.toCategory(categoryDto)
@@ -38,31 +43,29 @@ public class CategoryServiceImpl implements ICategoryService{
 
     @Override
     public CategoryDTO findById(Long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("Category doesn't exists")
-        );
+        Category category = categoryRepository
+                                .findById(id)
+                                .orElseThrow(() -> new NotFoundException("Category does not exist."));
 
         return categoryMapper.toCategoryDTO( category );
     }
 
     @Override
     public CategoryDTO update(CategoryDTO categoryDto) {
-        System.out.println(categoryDto);
-        return null;
+        if ( ! categoryRepository.existsById( categoryDto.getCategoryId() ) )
+            throw new NotFoundException("Category does not exist.");
+
+        return categoryMapper.toCategoryDTO(
+                categoryRepository.save( categoryMapper.toCategory(categoryDto) )
+        );
     }
 
     @Override
-    public void delete(CategoryDTO categoryDto) {
-        Category category = categoryMapper.toCategory(categoryDto);
+    public void delete(Long id) {
+        if( ! categoryRepository.existsById( id ) )
+            throw new NotFoundException("Category does not exist.");
 
-        if( ! this.existsById(category.getId()) ) {
-            throw new RuntimeException("Category does not exist");
-        }
-
-        categoryRepository.delete(category);
+        categoryRepository.deleteById(id);
     }
 
-    private boolean existsById(Long id) {
-        return categoryRepository.existsById(id);
-    }
 }

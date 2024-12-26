@@ -24,41 +24,27 @@ public class CategoryController {
 
     @GetMapping()
     public ResponseEntity<?> getAllCategories() {
-        CategoryDTO dto = new CategoryDTO();
-
-        dto.setCategoryId(1L);
-        dto.setCategoryImage("url");
-        dto.setCategoryName("hola");
-
-        return new ResponseEntity<>(List.of(dto), HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
-        CategoryDTO dto = new CategoryDTO();
-
-        dto.setCategoryId(id);
-        dto.setCategoryImage("url");
-        dto.setCategoryName("hola");
-
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping()
     public ResponseEntity<?> addCategory(@RequestBody CategoryDTO category) {
-        category.setCategoryId(1L);
-
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
     }
 
     @PutMapping()
     public ResponseEntity<?> updateCategory(@RequestBody CategoryDTO category) {
-        category.setCategoryId(1L);
         return new ResponseEntity<>(categoryService.update(category), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+        categoryService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
