@@ -1,4 +1,4 @@
-package com.ferreteriafc.api;
+package com.ferreteriafc.api.backend;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.SpringApplication;

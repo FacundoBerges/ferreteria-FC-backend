@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.web.exception;
+package com.ferreteriafc.api.backend.web.exception;
 
 public class AlreadyExistException extends RuntimeException {
 

@@ -1,11 +1,11 @@
-package com.ferreteriafc.api.domain.service;
+package com.ferreteriafc.api.backend.domain.service;
 
-import com.ferreteriafc.api.domain.mapper.CategoryMapper;
-import com.ferreteriafc.api.persistence.entity.Category;
-import com.ferreteriafc.api.persistence.repository.CategoryRepository;
-import com.ferreteriafc.api.web.dto.CategoryDTO;
-import com.ferreteriafc.api.web.exception.AlreadyExistException;
-import com.ferreteriafc.api.web.exception.NotFoundException;
+import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
+import com.ferreteriafc.api.backend.persistence.entity.Category;
+import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
+import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
+import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,9 @@ public class CategoryServiceImpl implements ICategoryService{
 
     @Override
     public CategoryDTO save(CategoryDTO categoryDto) {
-        if ( categoryRepository.existsByName( categoryDto.getCategoryName() ) )
+        String categoryName = categoryDto.getCategoryName();
+
+        if ( categoryRepository.existsByName( categoryName ) )
             throw new AlreadyExistException("Category already exist.");
 
         return categoryMapper.toCategoryDTO(

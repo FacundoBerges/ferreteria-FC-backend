@@ -1,7 +1,7 @@
-package com.ferreteriafc.api.domain.mapper;
+package com.ferreteriafc.api.backend.domain.mapper;
 
-import com.ferreteriafc.api.persistence.entity.Category;
-import com.ferreteriafc.api.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.persistence.entity.Category;
+import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 
 import org.mapstruct.*;
 

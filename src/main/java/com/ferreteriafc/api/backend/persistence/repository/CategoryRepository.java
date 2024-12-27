@@ -1,6 +1,6 @@
-package com.ferreteriafc.api.persistence.repository;
+package com.ferreteriafc.api.backend.persistence.repository;
 
-import com.ferreteriafc.api.persistence.entity.Category;
+import com.ferreteriafc.api.backend.persistence.entity.Category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

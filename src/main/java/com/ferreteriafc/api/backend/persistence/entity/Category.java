@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.persistence.entity;
+package com.ferreteriafc.api.backend.persistence.entity;
 
 import jakarta.persistence.*;
 

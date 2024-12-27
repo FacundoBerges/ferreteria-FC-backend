@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.web.dto;
+package com.ferreteriafc.api.backend.web.dto;
 
 public class ExceptionDTO {
     private Integer code;
