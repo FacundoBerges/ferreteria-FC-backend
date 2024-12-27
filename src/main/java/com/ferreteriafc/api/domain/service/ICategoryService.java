@@ -1,6 +1,6 @@
-package com.ferreteriafc.api.backend.domain.service;
+package com.ferreteriafc.api.domain.service;
 
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.web.dto.CategoryDTO;
 
 import java.util.List;
 

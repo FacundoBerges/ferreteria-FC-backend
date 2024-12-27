@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend;
+package com.ferreteriafc.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.web.dto;
+package com.ferreteriafc.api.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
