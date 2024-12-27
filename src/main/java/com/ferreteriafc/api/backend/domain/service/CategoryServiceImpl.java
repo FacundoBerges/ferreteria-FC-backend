@@ -26,21 +26,20 @@ public class CategoryServiceImpl implements ICategoryService{
 
     @Override
     public CategoryDTO save(CategoryDTO categoryDto) {
-        String categoryName = categoryDto.getCategoryName();
+        Category category = categoryMapper.toCategory(categoryDto);
+        String categoryName = category.getName();
 
         if ( categoryRepository.existsByName( categoryName ) )
             throw new AlreadyExistException("Category already exist.");
 
-        return categoryMapper.toCategoryDTO(
-            categoryRepository.save(
-                categoryMapper.toCategory(categoryDto)
-            )
-        );
+        return categoryMapper.toCategoryDTO( categoryRepository.save( category ) );
     }
 
     @Override
     public List<CategoryDTO> findAll() {
-        return categoryMapper.toCategoryDTOList( categoryRepository.findAll() );
+        List<Category> categories = categoryRepository.findAll();
+
+        return categoryMapper.toCategoryDTOList(categories);
     }
 
     @Override
@@ -54,12 +53,13 @@ public class CategoryServiceImpl implements ICategoryService{
 
     @Override
     public CategoryDTO update(CategoryDTO categoryDto) {
-        if ( ! categoryRepository.existsById( categoryDto.getCategoryId() ) )
+        Category category = categoryMapper.toCategory(categoryDto);
+        Long categoryId = category.getId();
+
+        if ( ! categoryRepository.existsById( categoryId ) )
             throw new NotFoundException("Category does not exist.");
 
-        return categoryMapper.toCategoryDTO(
-                categoryRepository.save( categoryMapper.toCategory(categoryDto) )
-        );
+        return categoryMapper.toCategoryDTO( categoryRepository.save( category ) );
     }
 
     @Override
