@@ -39,6 +39,9 @@ public class CategoryServiceImpl implements ICategoryService{
     public List<CategoryDTO> findAll() {
         List<Category> categories = categoryRepository.findAll();
 
+        if ( categories.isEmpty() )
+            throw new NotFoundException("No categories found.");
+
         return categoryMapper.toCategoryDTOList(categories);
     }
 

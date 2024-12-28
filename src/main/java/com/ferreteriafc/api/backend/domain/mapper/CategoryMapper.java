@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
+
     @Mappings({
         @Mapping(source = "id", target = "categoryId"),
         @Mapping(source = "name", target = "categoryName"),
@@ -20,4 +21,5 @@ public interface CategoryMapper {
 
     @InheritInverseConfiguration
     Category toCategory(CategoryDTO categoryDTO);
+
 }
