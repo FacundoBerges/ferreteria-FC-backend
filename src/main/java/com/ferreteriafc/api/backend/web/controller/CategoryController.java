@@ -4,6 +4,8 @@ import com.ferreteriafc.api.backend.domain.service.CategoryServiceImpl;
 import com.ferreteriafc.api.backend.domain.service.ICategoryService;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,7 @@ public class CategoryController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addCategory(@RequestBody CategoryDTO category) {
+    public ResponseEntity<?> addCategory(@RequestBody @Valid CategoryDTO category) {
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
     }
 

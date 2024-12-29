@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import lombok.*;
 
+import static com.ferreteriafc.api.backend.domain.utils.Constant.CATEGORIES_NAME_MAX_LENGTH;
+
 @Entity
 @Table(name = "categories")
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter
@@ -15,9 +17,10 @@ public class Category {
     @Column(nullable = false)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 50)
+    @Column(unique = true, nullable = false, length = CATEGORIES_NAME_MAX_LENGTH)
     private String name;
 
     @Column(name = "img_url")
     private String imageUrl;
+
 }
