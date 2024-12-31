@@ -5,8 +5,6 @@ import com.ferreteriafc.api.backend.domain.service.ICategoryService;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,17 +28,13 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(
-            @Valid
-            @NotNull(message = "Id cannot be null.")
-            @Positive(message = "Id must be bigger than 0.")
-            @PathVariable Long id) {
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
         return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping()
     public ResponseEntity<?> addCategory(@RequestBody @Valid CategoryDTO category) {
-        return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
     }
 
     @PutMapping()
@@ -49,11 +43,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCategory(
-            @Valid
-            @NotNull(message = "Id cannot be null.")
-            @Positive(message = "Id must be bigger than 0.")
-            @PathVariable Long id) {
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         categoryService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
