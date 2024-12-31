@@ -46,7 +46,7 @@ public class ExceptionController {
         var httpStatus = HttpStatus.BAD_REQUEST;
         var errorsMap = new HashMap<String, String>();
 
-        ex.getBindingResult().getFieldErrors().forEach(fieldError -> {
+        ex.getFieldErrors().forEach(fieldError -> {
             errorsMap.put(fieldError.getField(), fieldError.getDefaultMessage());
         });
 
