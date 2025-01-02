@@ -1,8 +1,10 @@
-package com.ferreteriafc.api.backend.web.dto;
+package com.ferreteriafc.api.backend.web.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,13 +12,10 @@ import lombok.NoArgsConstructor;
 
 import com.ferreteriafc.api.backend.domain.utils.Constant;
 
-@NoArgsConstructor @AllArgsConstructor @Data
-public class CategoryDTO {
-
-    @JsonProperty("category_id")
-    @NotNull(message = "Id must not be null.")
-    @Positive(message = "Id must be a positive number.")
-    private Long categoryId;
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class NewCategoryDTO {
 
     @JsonProperty("category_name")
     @NotBlank(message = "Name cannot be blank.")

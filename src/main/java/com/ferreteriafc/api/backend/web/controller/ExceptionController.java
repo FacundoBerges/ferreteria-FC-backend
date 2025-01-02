@@ -1,10 +1,6 @@
 package com.ferreteriafc.api.backend.web.controller;
 
-import com.ferreteriafc.api.backend.web.dto.response.ErrorDTO;
-import com.ferreteriafc.api.backend.web.dto.response.ValidationErrorsDTO;
-import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
-import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
-import com.ferreteriafc.api.backend.web.exception.NotFoundException;
+import java.util.HashMap;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +8,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
+import com.ferreteriafc.api.backend.web.dto.response.ErrorDTO;
+import com.ferreteriafc.api.backend.web.dto.response.ValidationErrorsDTO;
+import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
+import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
+import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 @RestControllerAdvice
 public class ExceptionController {

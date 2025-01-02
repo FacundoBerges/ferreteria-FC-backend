@@ -1,17 +1,18 @@
 package com.ferreteriafc.api.backend.domain.service;
 
-import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
-import com.ferreteriafc.api.backend.persistence.entity.Category;
-import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
-import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
-import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
-import com.ferreteriafc.api.backend.web.exception.NotFoundException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
+import com.ferreteriafc.api.backend.persistence.entity.Category;
+import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
+import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.web.dto.request.NewCategoryDTO;
+import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
+import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
+import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService{
@@ -26,7 +27,7 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public CategoryDTO save(CategoryDTO categoryDto) {
+    public CategoryDTO save(NewCategoryDTO categoryDto) {
         Category category = categoryMapper.toCategory(categoryDto);
         String categoryName = category.getName();
 

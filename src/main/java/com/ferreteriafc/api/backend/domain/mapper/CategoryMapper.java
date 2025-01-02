@@ -1,14 +1,22 @@
 package com.ferreteriafc.api.backend.domain.mapper;
 
-import com.ferreteriafc.api.backend.persistence.entity.Category;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import java.util.List;
 
 import org.mapstruct.*;
 
-import java.util.List;
+import com.ferreteriafc.api.backend.persistence.entity.Category;
+import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.web.dto.request.NewCategoryDTO;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
+
+    @Mappings({
+            @Mapping(source = "categoryName", target = "name"),
+            @Mapping(source = "categoryImage", target = "imageUrl"),
+            @Mapping(target = "id", ignore = true)
+    })
+    Category toCategory(NewCategoryDTO newCategoryDTO);
 
     @Mappings({
         @Mapping(source = "id", target = "categoryId"),

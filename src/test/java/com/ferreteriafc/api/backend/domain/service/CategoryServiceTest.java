@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.ferreteriafc.api.backend.web.dto.request.NewCategoryDTO;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +37,7 @@ public class CategoryServiceTest {
 
     private Category category;
     private CategoryDTO categoryDTO;
+    private NewCategoryDTO newCategoryDTO;
     private List<Category> categories;
     private List<CategoryDTO> categoriesDTOs;
 
@@ -46,6 +48,7 @@ public class CategoryServiceTest {
 
         category = new Category(1L, "Category 1", "Image URL 1");
         categoryDTO = new CategoryDTO(1L, "Category 1", "Image URL 1");
+        newCategoryDTO = new NewCategoryDTO("Category 1", "Image URL 1");
 
         categories.add(category);
         categories.add(new Category(2L, "Category 2", "Image URL 2"));
@@ -127,10 +130,10 @@ public class CategoryServiceTest {
     @Test
     void save_whenValidCategory_shouldReturnCategoryDTO() {
         when(categoryRepository.save(category)).thenReturn(category);
-        when(categoryMapper.toCategory(categoryDTO)).thenReturn(category);
+        when(categoryMapper.toCategory(newCategoryDTO)).thenReturn(category);
         when(categoryMapper.toCategoryDTO(category)).thenReturn(categoryDTO);
 
-        CategoryDTO testCategoryDTO = categoryService.save(categoryDTO);
+        CategoryDTO testCategoryDTO = categoryService.save(newCategoryDTO);
 
         assertAll("SavedCategory",
             () -> assertNotNull(testCategoryDTO),
@@ -144,10 +147,10 @@ public class CategoryServiceTest {
 
     @Test
     void save_whenCategoryNameAlreadyExists_shouldThrowAlreadyExistsException() {
-        when(categoryMapper.toCategory(categoryDTO)).thenReturn(category);
+        when(categoryMapper.toCategory(newCategoryDTO)).thenReturn(category);
         when(categoryRepository.existsByName(categoryDTO.getCategoryName())).thenReturn(true);
 
-        assertThrows(AlreadyExistException.class, () -> categoryService.save(categoryDTO));
+        assertThrows(AlreadyExistException.class, () -> categoryService.save(newCategoryDTO));
     }
 
 

@@ -1,12 +1,13 @@
 package com.ferreteriafc.api.backend.domain.service;
 
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
-
 import java.util.List;
+
+import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.web.dto.request.NewCategoryDTO;
 
 public interface ICategoryService {
 
-    CategoryDTO save(CategoryDTO categoryDto);
+    CategoryDTO save(NewCategoryDTO categoryDto);
 
     List<CategoryDTO> findAll();
 
