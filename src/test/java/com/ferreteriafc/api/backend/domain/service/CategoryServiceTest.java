@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.ferreteriafc.api.backend.web.dto.request.NewCategoryDTO;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -19,11 +18,12 @@ import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
 import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.web.dto.request.NewCategoryDTO;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class CategoryServiceTest {
 
     @Mock
