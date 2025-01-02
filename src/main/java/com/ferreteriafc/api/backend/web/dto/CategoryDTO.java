@@ -6,10 +6,11 @@ import com.ferreteriafc.api.backend.domain.utils.Constant;
 
 import jakarta.validation.constraints.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor @Data
+@NoArgsConstructor @AllArgsConstructor @Data
 public class CategoryDTO {
 
     @JsonProperty("category_id")
