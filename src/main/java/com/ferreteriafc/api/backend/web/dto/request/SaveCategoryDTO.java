@@ -12,10 +12,8 @@ import lombok.NoArgsConstructor;
 
 import com.ferreteriafc.api.backend.domain.utils.Constant;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-public class NewCategoryDTO {
+@NoArgsConstructor @AllArgsConstructor @Data
+public class SaveCategoryDTO {
 
     @JsonProperty("category_name")
     @NotBlank(message = "Name cannot be blank.")

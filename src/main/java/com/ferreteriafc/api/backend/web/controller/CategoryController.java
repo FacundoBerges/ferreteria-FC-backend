@@ -9,8 +9,8 @@ import jakarta.validation.Valid;
 
 import com.ferreteriafc.api.backend.domain.service.CategoryServiceImpl;
 import com.ferreteriafc.api.backend.domain.service.ICategoryService;
+import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
-import com.ferreteriafc.api.backend.web.dto.request.NewCategoryDTO;
 
 @RestController
 @RequestMapping("/categories")
@@ -34,7 +34,7 @@ public class CategoryController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addCategory(@RequestBody @Valid NewCategoryDTO category) {
+    public ResponseEntity<?> addCategory(@RequestBody @Valid SaveCategoryDTO category) {
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
     }
 

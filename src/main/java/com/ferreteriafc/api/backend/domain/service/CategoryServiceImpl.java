@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
 import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
+import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
-import com.ferreteriafc.api.backend.web.dto.request.NewCategoryDTO;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public CategoryDTO save(NewCategoryDTO categoryDto) {
+    public CategoryDTO save(SaveCategoryDTO categoryDto) {
         Category category = categoryMapper.toCategory(categoryDto);
         String categoryName = category.getName();
 

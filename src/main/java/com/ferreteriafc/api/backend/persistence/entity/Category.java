@@ -1,14 +1,14 @@
 package com.ferreteriafc.api.backend.persistence.entity;
 
-import com.ferreteriafc.api.backend.domain.utils.Constant;
 import jakarta.persistence.*;
 
 import lombok.*;
 
+import com.ferreteriafc.api.backend.domain.utils.Constant;
+
 @Entity
 @Table(name = "categories")
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
-@ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class Category {
 
     @Id
