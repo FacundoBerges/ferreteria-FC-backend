@@ -1,51 +1,121 @@
 package com.ferreteriafc.api.backend.web.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Test;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.ferreteriafc.api.backend.domain.service.ICategoryService;
+import com.ferreteriafc.api.backend.domain.service.CategoryServiceImpl;
+import com.ferreteriafc.api.backend.domain.utils.MockObjectFactory;
+import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@ExtendWith(MockitoExtension.class)
 public class CategoryControllerTest {
 
     @Mock
-    private ICategoryService categoryService;
+    private CategoryServiceImpl categoryService;
 
     @InjectMocks
     private CategoryController categoryController;
 
-    @Autowired
-    private MockMvc mockMvc;
-
+    private SaveCategoryDTO saveCategoryDTO;
+    private CategoryDTO categoryDTO;
+    private List<CategoryDTO> categoriesDTO;
 
     @BeforeEach
     void setUp() {
-        
+        saveCategoryDTO = MockObjectFactory.getSaveCategoryDTO();
+        categoryDTO = MockObjectFactory.getCategoryDTO();
+        categoriesDTO = MockObjectFactory.getCategoryDTOList();
     }
 
     @Test
-    void testGetCategories() throws Exception {
-//        when(categoryService.findAll()).thenReturn()
+    @DisplayName("Method: getAllCategories() - when existing categories should return a list of categoriesDTO with http status code 200 (Ok)")
+    void getAllCategories_whenCalledAndCategoriesExist_shouldReturnListOfCategoriesDTOAndStatus200() {
+        when(categoryService.findAll()).thenReturn(categoriesDTO);
+        ResponseEntity<?> expectedResponse = ResponseEntity.ok(categoriesDTO);
 
-        mockMvc
-            .perform(get("/categories"))
-            .andExpectAll(
-                status().isOk(),
-                content().contentType(MediaType.APPLICATION_JSON)
-            );
+        ResponseEntity<?> testResponseEntity = categoryController.getAllCategories();
+
+        assertAll("getAllCategories",
+            () -> assertEquals(expectedResponse, testResponseEntity),
+            () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
+            () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
+        );
+        verify( categoryService , times(1)).findAll();
     }
 
+    @Test
+    @DisplayName("Method: getCategoryById() - when existing category should return categoryDTO with http status code 200 (Ok)")
+    void getCategoryById_whenCalledAndCategoryExist_shouldReturnCategoryDTOAndStatus200() {
+        when(categoryService.findById(anyLong())).thenReturn(categoryDTO);
+        ResponseEntity<?> expectedResponse = ResponseEntity.ok(categoryDTO);
+
+        ResponseEntity<?> testResponseEntity = categoryController.getCategoryById(1L);
+
+        assertAll("getCategoryById",
+            () -> assertEquals(expectedResponse, testResponseEntity),
+            () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
+            () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
+        );
+        verify( categoryService , times(1)).findById(anyLong());
+    }
+
+    @Test
+    @DisplayName("Method: addCategory() - when category doesn't exist should return a new categoryDTO with http status code 201 (Created)")
+    void addCategory_whenCalledAndCategoryDoesNotExist_shouldReturnCategoryDTOAndStatus201() {
+        when(categoryService.save(any(SaveCategoryDTO.class))).thenReturn(categoryDTO);
+        ResponseEntity<?> expectedResponse = ResponseEntity.status(201).body(categoryDTO);
+
+        ResponseEntity<?> testResponseEntity = categoryController.addCategory(saveCategoryDTO);
+
+        assertAll("getCategoryById",
+            () -> assertEquals(expectedResponse, testResponseEntity),
+            () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
+            () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
+        );
+        verify( categoryService , times(1)).save(any(SaveCategoryDTO.class));
+    }
+
+    @Test
+    @DisplayName("Method: updateCategory() - when category exist and could be updated should return categoryDTO with http status code 200 (Ok)")
+    void updateCategory_whenCalledAndCategoryExist_shouldReturnCategoryDTOAndStatus200() {
+        when(categoryService.update(any(CategoryDTO.class))).thenReturn(categoryDTO);
+        ResponseEntity<?> expectedResponse = ResponseEntity.ok(categoryDTO);
+
+        ResponseEntity<?> testResponseEntity = categoryController.updateCategory(categoryDTO);
+
+        assertAll("getCategoryById",
+            () -> assertEquals(expectedResponse, testResponseEntity),
+            () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
+            () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
+        );
+        verify( categoryService , times(1)).update(any(CategoryDTO.class));
+    }
+
+    @Test
+    @DisplayName("Method: deleteCategory() - when category exists and could be deleted should return http status code 204 (No content)")
+    void deleteCategory_whenCategoryExist_shouldReturnHttpStatus204() {
+        ResponseEntity<?> expectedResponse = ResponseEntity.noContent().build();
+
+        ResponseEntity<?> testResponseEntity = categoryController.deleteCategory(1L);
+
+        assertAll("getCategoryById",
+            () -> assertEquals(expectedResponse, testResponseEntity),
+            () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode())
+        );
+        verify( categoryService , times(1)).delete(1L);
+    }
 }

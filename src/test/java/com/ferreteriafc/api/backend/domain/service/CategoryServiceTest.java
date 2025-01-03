@@ -57,7 +57,7 @@ public class CategoryServiceTest {
 
     @Test
     @DisplayName("Method: findAll() - when existing categories should: return list of categoriesDTO")
-    void findAll_whenExistingCategories_thenReturnCategoriesDTOs() {
+    void findAll_whenExistingCategories_shouldReturnCategoriesDTOs() {
         when(categoryRepository.findAll()).thenReturn(categories);
         when(categoryMapper.toCategoryDTOList(anyList())).thenReturn(categoriesDTOs);
 
