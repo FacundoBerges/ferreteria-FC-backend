@@ -7,4 +7,7 @@ import com.ferreteriafc.api.backend.persistence.entity.Brand;
 
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Long> {
+
+    boolean existsByName(String name);
+
 }

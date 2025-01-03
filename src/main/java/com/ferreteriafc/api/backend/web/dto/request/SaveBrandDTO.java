@@ -1,16 +1,13 @@
-package com.ferreteriafc.api.backend.web.dto;
+package com.ferreteriafc.api.backend.web.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-public class BrandDTO {
-
-    @JsonProperty("brand_id")
-    private Long brandId;
+public class SaveBrandDTO {
 
     @JsonProperty("brand_name")
     private String brandName;
