@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
 import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
@@ -12,8 +13,6 @@ import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
-
-import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService{

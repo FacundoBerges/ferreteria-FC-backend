@@ -2,18 +2,17 @@ package com.ferreteriafc.api.backend.domain.service;
 
 import java.util.List;
 
-import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
-import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 import com.ferreteriafc.api.backend.domain.mapper.BrandMapper;
 import com.ferreteriafc.api.backend.persistence.entity.Brand;
 import com.ferreteriafc.api.backend.persistence.repository.BrandRepository;
 import com.ferreteriafc.api.backend.web.dto.BrandDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
-
-import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
+import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
+import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 @Service
 public class BrandServiceImpl implements IBrandService {
