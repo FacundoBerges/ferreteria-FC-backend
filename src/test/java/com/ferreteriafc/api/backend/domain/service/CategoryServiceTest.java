@@ -220,7 +220,7 @@ public class CategoryServiceTest {
             () -> assertThrows(InvalidIdException.class, () -> categoryService.delete(0L)),
             () -> assertThrows(InvalidIdException.class, () -> categoryService.delete(-1L))
         );
-        verify( categoryRepository, never()).existsById(0L);
+        verify(categoryRepository, never()).existsById(0L);
         verify(categoryRepository, never()).deleteById(-1L);
         verify(categoryRepository, never()).deleteById(0L);
         verify(categoryRepository, never()).deleteById(-1L);

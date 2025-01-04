@@ -3,8 +3,11 @@ package com.ferreteriafc.api.backend.domain.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ferreteriafc.api.backend.persistence.entity.Brand;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
+import com.ferreteriafc.api.backend.web.dto.BrandDTO;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
 
 public class MockObjectFactory {
@@ -37,6 +40,36 @@ public class MockObjectFactory {
         categories.add(new CategoryDTO(2L, "Category 2", "Image URL 2"));
 
         return categories;
+    }
+
+    public static Brand getBrandEntity() {
+        return new Brand(1L, "Brand 1");
+    }
+
+    public static BrandDTO getBrandDTO() {
+        return new BrandDTO(1L, "Brand 1");
+    }
+
+    public static SaveBrandDTO getSaveBrandDTO() {
+        return new SaveBrandDTO("Brand 1");
+    }
+
+    public static List<Brand> getBrands() {
+        List<Brand> brands = new ArrayList<>();
+
+        brands.add(getBrandEntity());
+        brands.add(new Brand(2L, "Brand 2"));
+
+        return brands;
+    }
+
+    public static List<BrandDTO> getBrandDTOList() {
+        List<BrandDTO> brands = new ArrayList<>();
+
+        brands.add(getBrandDTO());
+        brands.add(new BrandDTO(2L, "Brand 2"));
+
+        return brands;
     }
 
 }
