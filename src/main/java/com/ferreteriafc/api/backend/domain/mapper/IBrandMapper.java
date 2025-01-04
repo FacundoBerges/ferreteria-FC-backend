@@ -15,13 +15,13 @@ import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 public interface IBrandMapper {
 
     @Mappings({
-        @Mapping(target = "id", source = "brandId"),
-        @Mapping(target = "name", source = "brandName")
+        @Mapping(source = "brandId", target = "id"),
+        @Mapping(source = "brandName", target = "name")
     })
     Brand toBrand(BrandDTO brandDTO);
 
     @Mappings({
-        @Mapping(target = "name", source = "brandName"),
+        @Mapping(source = "brandName", target = "name"),
         @Mapping(target = "id", ignore = true)
     })
     Brand toBrand(SaveBrandDTO brandDTO);
