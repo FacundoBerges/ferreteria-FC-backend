@@ -1,5 +1,6 @@
 package com.ferreteriafc.api.backend.web.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +33,13 @@ public class BrandController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addBrand(@RequestBody SaveBrandDTO brandDTO) {
-        return new ResponseEntity<>(brandService.save(brandDTO), HttpStatus.CREATED);
+    public ResponseEntity<?> addBrand(@RequestBody @Valid SaveBrandDTO brand) {
+        return new ResponseEntity<>(brandService.save(brand), HttpStatus.CREATED);
     }
 
     @PutMapping()
-    public ResponseEntity<?> updateBrand(@RequestBody BrandDTO brandDTO) {
-        return new ResponseEntity<>(brandService.update(brandDTO), HttpStatus.OK);
+    public ResponseEntity<?> updateBrand(@RequestBody @Valid BrandDTO brand) {
+        return new ResponseEntity<>(brandService.update(brand), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -7,11 +7,11 @@ import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 
 public interface IBrandService {
 
+    BrandDTO save(SaveBrandDTO brandDTO);
+
     List<BrandDTO> findAll();
 
     BrandDTO findById(Long id);
-
-    BrandDTO save(SaveBrandDTO brandDTO);
 
     BrandDTO update(BrandDTO brandDTO);
 

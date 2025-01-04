@@ -11,8 +11,9 @@ import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
 import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
-import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
+
+import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService{
@@ -81,11 +82,4 @@ public class CategoryServiceImpl implements ICategoryService{
         categoryRepository.deleteById(id);
     }
 
-    private void validateId(Long id) throws InvalidIdException {
-        if(id == null)
-            throw new InvalidIdException("Id cannot be null.");
-
-        if(id < 1)
-            throw new InvalidIdException("Id cannot be less than 1.");
-    }
 }
