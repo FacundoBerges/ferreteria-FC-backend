@@ -2,10 +2,9 @@ package com.ferreteriafc.api.backend.domain.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
 import org.springframework.stereotype.Service;
 
-import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
 import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
 import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
@@ -20,7 +19,6 @@ public class CategoryServiceImpl implements ICategoryService{
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
     
-    @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
