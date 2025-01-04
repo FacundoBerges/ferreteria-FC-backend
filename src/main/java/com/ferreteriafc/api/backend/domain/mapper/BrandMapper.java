@@ -12,7 +12,7 @@ import com.ferreteriafc.api.backend.web.dto.BrandDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 
 @Mapper(componentModel = "spring")
-public interface IBrandMapper {
+public interface BrandMapper {
 
     @Mappings({
         @Mapping(source = "brandId", target = "id"),

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ferreteriafc.api.backend.domain.mapper.IBrandMapper;
+import com.ferreteriafc.api.backend.domain.mapper.BrandMapper;
 import com.ferreteriafc.api.backend.persistence.entity.Brand;
 import com.ferreteriafc.api.backend.persistence.repository.BrandRepository;
 import com.ferreteriafc.api.backend.web.dto.BrandDTO;
@@ -15,10 +15,10 @@ import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 public class BrandServiceImpl implements IBrandService {
 
     private final BrandRepository brandRepository;
-    private final IBrandMapper brandMapper;
+    private final BrandMapper brandMapper;
 
     @Autowired
-    public BrandServiceImpl(BrandRepository brandRepository, IBrandMapper brandMapper) {
+    public BrandServiceImpl(BrandRepository brandRepository, BrandMapper brandMapper) {
         this.brandRepository = brandRepository;
         this.brandMapper = brandMapper;
     }
