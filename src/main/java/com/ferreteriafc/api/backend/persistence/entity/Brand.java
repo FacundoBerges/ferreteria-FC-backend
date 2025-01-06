@@ -1,5 +1,6 @@
 package com.ferreteriafc.api.backend.persistence.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -21,7 +22,12 @@ public class Brand {
     @Column(unique = true, nullable = false, length = Constant.BRANDS_NAME_MAX_LENGTH)
     private String name;
 
-    @OneToMany(mappedBy = "brand")
-    private List<Product> products;
+    @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
+    private List<Product> products = new ArrayList<>();
 
+    public Brand(Long id, String name) {
+        this.products = new ArrayList<>();
+        this.id = id;
+        this.name = name;
+    }
 }
