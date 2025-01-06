@@ -6,6 +6,8 @@ import lombok.*;
 
 import com.ferreteriafc.api.backend.domain.utils.Constant;
 
+import java.util.List;
+
 @Entity
 @Table(name = "categories")
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
@@ -21,5 +23,8 @@ public class Category {
 
     @Column(name = "img_url")
     private String imageUrl;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
 }

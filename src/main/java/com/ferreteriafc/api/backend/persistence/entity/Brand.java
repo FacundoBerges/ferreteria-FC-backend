@@ -1,11 +1,10 @@
 package com.ferreteriafc.api.backend.persistence.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import com.ferreteriafc.api.backend.domain.utils.Constant;
 
@@ -21,5 +20,8 @@ public class Brand {
 
     @Column(unique = true, nullable = false, length = Constant.BRANDS_NAME_MAX_LENGTH)
     private String name;
+
+    @OneToMany(mappedBy = "brand")
+    private List<Product> products;
 
 }
