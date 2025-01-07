@@ -2,20 +2,33 @@ package com.ferreteriafc.api.backend.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import com.ferreteriafc.api.backend.domain.utils.Constant;
 
 @Data @NoArgsConstructor @AllArgsConstructor
 public class ProductDTO {
 
     @JsonProperty("product_id")
+    @Min(value = 1, message = "Id must be {value} o higher.")
+    @NotNull(message = "Id cannot be null.")
     private Integer id;
 
     @JsonProperty("product_description")
+    @Size(min = 1, max = Constant.PRODUCTS_DESCRIPTION_MAX_LENGTH, message = "Description length must be between {min} and {max}.")
+    @NotBlank(message = "Description cannot be blank.")
     protected String description;
 
     @JsonProperty("product_code")
+    @Size(min = 1, max = Constant.PRODUCTS_CODE_MAX_LENGTH, message = "Code length must be between {min} and {max}.")
+    @NotBlank(message = "Code cannot be blank.")
     protected String code;
 
     @JsonProperty("product_price")

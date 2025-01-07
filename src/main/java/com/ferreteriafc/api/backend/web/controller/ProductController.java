@@ -30,7 +30,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(productService.findById(id), HttpStatus.OK)
+        return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
