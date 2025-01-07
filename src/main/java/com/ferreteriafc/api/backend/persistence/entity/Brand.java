@@ -25,7 +25,7 @@ public class Brand {
     @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
 
-    public Brand(Long id, String name) {
+    public Brand(Integer id, String name) {
         this.products = new ArrayList<>();
         this.id = id;
         this.name = name;

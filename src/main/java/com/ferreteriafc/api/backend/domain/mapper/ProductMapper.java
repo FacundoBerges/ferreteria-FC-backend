@@ -1,11 +1,12 @@
 package com.ferreteriafc.api.backend.domain.mapper;
 
+import java.util.List;
+
+import org.mapstruct.*;
+
 import com.ferreteriafc.api.backend.persistence.entity.Product;
 import com.ferreteriafc.api.backend.web.dto.ProductDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
-import org.mapstruct.*;
-
-import java.util.List;
 
 @Mapper(
     componentModel = "spring",
