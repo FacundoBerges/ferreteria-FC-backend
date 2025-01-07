@@ -4,7 +4,7 @@ import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
 
 public class Validation {
 
-    public static void validateId(Long id) throws InvalidIdException {
+    public static void validateId(Integer id) {
         if(id == null)
             throw new InvalidIdException("Id cannot be null.");
 

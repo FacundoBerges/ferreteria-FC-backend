@@ -49,7 +49,7 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public BrandDTO findById(Long id) {
+    public BrandDTO findById(Integer id) {
         validateId(id);
 
         Brand brand = brandRepository
@@ -62,7 +62,7 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public BrandDTO update(BrandDTO brandDTO) {
         Brand brand = brandMapper.toBrand(brandDTO);
-        Long id = brand.getId();
+        Integer id = brand.getId();
 
         if( ! brandRepository.existsById(id) )
             throw new NotFoundException("Brand does not exist.");
@@ -71,7 +71,7 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         validateId(id);
 
         if ( ! brandRepository.existsById(id))

@@ -1,10 +1,6 @@
 package com.ferreteriafc.api.backend.domain.mapper;
 
-import com.ferreteriafc.api.backend.persistence.entity.Brand;
-import com.ferreteriafc.api.backend.persistence.entity.Category;
 import com.ferreteriafc.api.backend.persistence.entity.Product;
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.ProductDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 import org.mapstruct.*;

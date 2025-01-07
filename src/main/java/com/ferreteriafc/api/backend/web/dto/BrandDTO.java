@@ -19,7 +19,7 @@ public class BrandDTO {
     @JsonProperty("brand_id")
     @NotNull(message = "Id must not be null.")
     @Positive(message = "Id must be a positive number.")
-    private Long brandId;
+    private Integer brandId;
 
     @JsonProperty("brand_name")
     @NotBlank(message = "Name cannot be blank.")

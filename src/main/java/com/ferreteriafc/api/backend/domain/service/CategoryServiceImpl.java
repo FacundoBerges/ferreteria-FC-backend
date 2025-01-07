@@ -48,7 +48,7 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public CategoryDTO findById(Long id) {
+    public CategoryDTO findById(Integer id) {
         validateId(id);
 
         Category category = categoryRepository
@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements ICategoryService{
     @Override
     public CategoryDTO update(CategoryDTO categoryDto) {
         Category category = categoryMapper.toCategory(categoryDto);
-        Long categoryId = category.getId();
+        Integer categoryId = category.getId();
 
         validateId(categoryId);
 
@@ -72,7 +72,7 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         validateId(id);
 
         if( ! categoryRepository.existsById( id ) )

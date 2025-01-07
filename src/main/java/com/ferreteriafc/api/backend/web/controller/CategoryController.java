@@ -29,7 +29,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<?> getCategoryById(@PathVariable Integer id) {
         return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
     }
 
@@ -44,7 +44,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
         categoryService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

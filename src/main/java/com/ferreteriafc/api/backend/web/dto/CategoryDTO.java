@@ -16,7 +16,7 @@ public class CategoryDTO {
     @JsonProperty("category_id")
     @NotNull(message = "Id must not be null.")
     @Positive(message = "Id must be a positive number.")
-    private Long categoryId;
+    private Integer categoryId;
 
     @JsonProperty("category_name")
     @NotBlank(message = "Name cannot be blank.")

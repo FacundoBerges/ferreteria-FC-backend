@@ -28,7 +28,7 @@ public class BrandController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBrandById(@PathVariable Long id) {
+    public ResponseEntity<?> getBrandById(@PathVariable Integer id) {
         return new ResponseEntity<>(brandService.findById(id), HttpStatus.OK);
     }
 
@@ -43,7 +43,7 @@ public class BrandController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBrand(@PathVariable Long id) {
+    public ResponseEntity<?> deleteBrand(@PathVariable Integer id) {
         brandService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

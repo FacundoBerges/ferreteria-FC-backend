@@ -11,10 +11,10 @@ public interface IBrandService {
 
     List<BrandDTO> findAll();
 
-    BrandDTO findById(Long id);
+    BrandDTO findById(Integer id);
 
     BrandDTO update(BrandDTO brandDTO);
 
-    void delete(Long id);
+    void delete(Integer id);
 
 }
