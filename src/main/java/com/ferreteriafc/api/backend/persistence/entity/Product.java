@@ -1,6 +1,7 @@
 package com.ferreteriafc.api.backend.persistence.entity;
 
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -24,10 +24,10 @@ public class ProductDTO {
     @JsonProperty("product_image_url")
     protected String imageUrl;
 
-    @JsonProperty("product_brand_id")
-    protected Integer brandId;
+    @JsonProperty("product_brand")
+    protected BrandDTO brandDTO;
 
-    @JsonProperty("product_category_id")
-    protected Integer categoryId;
+    @JsonProperty("product_category")
+    protected CategoryDTO categoryDTO;
 
 }
