@@ -29,11 +29,11 @@ public class Product {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false)
+    @JoinColumn(name = "brand_id", nullable = false, referencedColumnName = "id")
     private Brand brand;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false, referencedColumnName = "id")
     private Category category;
 
 }

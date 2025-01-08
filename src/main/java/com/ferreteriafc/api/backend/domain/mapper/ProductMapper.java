@@ -26,15 +26,15 @@ public interface ProductMapper {
     ProductDTO toProductDTO(Product product);
 
     @Mappings({
-        @Mapping(target = "id", ignore = true),
         @Mapping(source = "code", target = "code"),
         @Mapping(source = "description", target = "description"),
         @Mapping(source = "imageUrl", target = "imgUrl"),
         @Mapping(source = "price", target = "price"),
-        @Mapping(source = "brandDTO", target = "brand"),
-        @Mapping(source = "categoryDTO", target = "category")
+        @Mapping(source = "brandId", target = "brand.id"),
+        @Mapping(source = "categoryId", target = "category.id"),
+        @Mapping(target = "id", ignore = true)
     })
-    Product toProduct(SaveProductDTO productDTO);
+    Product toProduct(SaveProductDTO saveProductDTO);
 
     @InheritInverseConfiguration
     Product toProduct(ProductDTO product);

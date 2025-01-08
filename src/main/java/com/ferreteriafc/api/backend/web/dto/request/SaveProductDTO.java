@@ -2,16 +2,16 @@ package com.ferreteriafc.api.backend.web.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.ferreteriafc.api.backend.domain.utils.Constant;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.domain.utils.Constant;
 
 @NoArgsConstructor @AllArgsConstructor @Data
 public class SaveProductDTO {
@@ -31,10 +31,14 @@ public class SaveProductDTO {
     @JsonProperty("product_image_url")
     protected String imageUrl;
 
-    @JsonProperty("product_brand")
-    protected BrandDTO brandDTO;
+    @JsonProperty("product_brand_id")
+    @NotNull(message = "Brand id cannot be null.")
+    @Min(value = 1, message = "Brand id cannot be less than {value}.")
+    protected Integer brandId;
 
-    @JsonProperty("product_category")
-    protected CategoryDTO categoryDTO;
+    @JsonProperty("product_category_id")
+    @NotNull(message = "Brand id cannot be null.")
+    @Min(value = 1, message = "Brand id cannot be less than {value}.")
+    protected Integer categoryId;
 
 }
