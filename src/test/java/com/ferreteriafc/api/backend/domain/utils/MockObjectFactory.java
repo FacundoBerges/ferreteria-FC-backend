@@ -17,7 +17,7 @@ public class MockObjectFactory {
     }
 
     public static CategoryDTO getCategoryDTO() {
-        return new CategoryDTO(1L, "Category 1", "Image URL 1");
+        return new CategoryDTO(1, "Category 1", "Image URL 1");
     }
 
     public static SaveCategoryDTO getSaveCategoryDTO() {
