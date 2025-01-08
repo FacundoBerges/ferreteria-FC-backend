@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.InjectMocks;
@@ -62,17 +61,17 @@ public class BrandControllerTest {
     @Test
     @DisplayName("Method: getBrandById() - when existing brand should return brandDTO with http status code 200 (Ok)")
     void getBrandById_whenCalledAndBrandExist_shouldReturnBrandDTOAndStatus200() {
-        when(brandService.findById(anyLong())).thenReturn(brandDTO);
+        when(brandService.findById(anyInt())).thenReturn(brandDTO);
         ResponseEntity<?> expectedResponse = ResponseEntity.ok(brandDTO);
 
-        ResponseEntity<?> testResponseEntity = brandController.getBrandById(1L);
+        ResponseEntity<?> testResponseEntity = brandController.getBrandById(1);
 
         assertAll("getBrandById",
             () -> assertEquals(expectedResponse, testResponseEntity),
             () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
             () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
         );
-        verify(brandService, times(1)).findById(anyLong());
+        verify(brandService, times(1)).findById(anyInt());
     }
 
     @Test
@@ -112,12 +111,12 @@ public class BrandControllerTest {
     void deleteBrand_whenBrandExist_shouldReturnHttpStatus204() {
         ResponseEntity<?> expectedResponse = ResponseEntity.noContent().build();
 
-        ResponseEntity<?> testResponseEntity = brandController.deleteBrand(1L);
+        ResponseEntity<?> testResponseEntity = brandController.deleteBrand(1);
 
         assertAll("deleteBrand",
             () -> assertEquals(expectedResponse, testResponseEntity),
             () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode())
         );
-        verify(brandService, times(1)).delete(1L);
+        verify(brandService, times(1)).delete(1);
     }
 }
