@@ -92,8 +92,8 @@ public class CategoryServiceTest {
     @Test
     @DisplayName("Method: findById() - when valid ID and category exists in database should return corresponding categoryDTO")
     void findById_whenValidIdAndExistingEntity_shouldReturnCategoryDTO() {
-        Long id = 1L;
-        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+        Integer id = 1;
+        when(categoryRepository.findById(anyInt())).thenReturn(Optional.of(category));
         when(categoryMapper.toCategoryDTO(any(Category.class))).thenReturn(categoryDTO);
 
         CategoryDTO testCategoryDTO = categoryService.findById(id);
@@ -111,9 +111,9 @@ public class CategoryServiceTest {
     @Test
     @DisplayName("Method: findById() - when valid ID but category doesn't exist in database should throw NotFoundException")
     void findById_whenValidIdAndNoExistingEntity_shouldThrowNotFoundException() {
-        when(categoryRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(categoryRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> categoryService.findById(1L));
+        assertThrows(NotFoundException.class, () -> categoryService.findById(1));
     }
 
     @Test
@@ -125,8 +125,8 @@ public class CategoryServiceTest {
     @Test
     @DisplayName("Method: findById() - when ID is negative or zero should throw InvalidIdException")
     void findById_whenIdIsNegativeOrZero_shouldThrowInvalidIdException() {
-        assertThrows(InvalidIdException.class, () -> categoryService.findById(0L));
-        assertThrows(InvalidIdException.class, () -> categoryService.findById(-1L));
+        assertThrows(InvalidIdException.class, () -> categoryService.findById(0));
+        assertThrows(InvalidIdException.class, () -> categoryService.findById(-1));
     }
 
 
@@ -162,7 +162,7 @@ public class CategoryServiceTest {
     @Test
     @DisplayName("Method: update() - when is valid category should return categoryDTO")
     void update_whenValidCategory_shouldReturnCategoryDTO() {
-        when(categoryRepository.existsById(anyLong())).thenReturn(true);
+        when(categoryRepository.existsById(anyInt())).thenReturn(true);
         when(categoryRepository.save(any(Category.class))).thenReturn(category);
         when(categoryMapper.toCategoryDTO(any(Category.class))).thenReturn(categoryDTO);
         when(categoryMapper.toCategory(any(CategoryDTO.class))).thenReturn(category);
@@ -180,7 +180,7 @@ public class CategoryServiceTest {
     @DisplayName("Method: update() - when the category is not in database should throw NotFoundException")
     void update_whenCategoryNotFound_shouldThrowNotFoundException() {
         when(categoryMapper.toCategory(any(CategoryDTO.class))).thenReturn(category);
-        when(categoryRepository.existsById(anyLong())).thenReturn(false);
+        when(categoryRepository.existsById(anyInt())).thenReturn(false);
 
         assertThrows(NotFoundException.class, () -> categoryService.update(categoryDTO));
     }
@@ -188,28 +188,28 @@ public class CategoryServiceTest {
     @Test
     @DisplayName("Method: delete() - when is valid ID and category exists in database, should delete category")
     void delete_whenValidIdAndExistingCategory_shouldDeleteCategory() {
-        when(categoryRepository.existsById(anyLong())).thenReturn(true);
+        when(categoryRepository.existsById(anyInt())).thenReturn(true);
 
-        assertDoesNotThrow(() -> categoryService.delete(1L));
-        verify(categoryRepository, times(1)).existsById(anyLong());
-        verify(categoryRepository, times(1)).deleteById(anyLong());
+        assertDoesNotThrow(() -> categoryService.delete(1));
+        verify(categoryRepository, times(1)).existsById(anyInt());
+        verify(categoryRepository, times(1)).deleteById(anyInt());
     }
 
     @Test
     @DisplayName("Method: delete() - when invalid ID or category doesn't exist in database, should throw NotFoundException")
     void delete_whenCategoryNotFound_shouldThrowNotFoundException() {
-        when(categoryRepository.existsById(anyLong())).thenReturn(false);
+        when(categoryRepository.existsById(anyInt())).thenReturn(false);
 
-        assertThrows(NotFoundException.class, () -> categoryService.delete(1L));
-        verify(categoryRepository, times(1)).existsById(anyLong());
-        verify(categoryRepository, never()).deleteById(anyLong());
+        assertThrows(NotFoundException.class, () -> categoryService.delete(1));
+        verify(categoryRepository, times(1)).existsById(anyInt());
+        verify(categoryRepository, never()).deleteById(anyInt());
     }
 
     @Test
     @DisplayName("Method: delete() - when ID is null, should throw InvalidIdException")
     void delete_whenIdIsNull_shouldThrowInvalidIdException() {
         assertThrows(InvalidIdException.class, () -> categoryService.delete(null));
-        verify(categoryRepository, never()).existsById(anyLong());
+        verify(categoryRepository, never()).existsById(anyInt());
         verify(categoryRepository, never()).deleteById(isNull());
     }
 
@@ -217,12 +217,12 @@ public class CategoryServiceTest {
     @DisplayName("Method: delete() - when ID is negative or zero, should throw InvalidIdException")
     void delete_whenIdIsNegativeOrZero_shouldThrowInvalidIdException() {
         assertAll(
-            () -> assertThrows(InvalidIdException.class, () -> categoryService.delete(0L)),
-            () -> assertThrows(InvalidIdException.class, () -> categoryService.delete(-1L))
+            () -> assertThrows(InvalidIdException.class, () -> categoryService.delete(0)),
+            () -> assertThrows(InvalidIdException.class, () -> categoryService.delete(-1))
         );
-        verify(categoryRepository, never()).existsById(0L);
-        verify(categoryRepository, never()).deleteById(-1L);
-        verify(categoryRepository, never()).deleteById(0L);
-        verify(categoryRepository, never()).deleteById(-1L);
+        verify(categoryRepository, never()).existsById(0);
+        verify(categoryRepository, never()).deleteById(-1);
+        verify(categoryRepository, never()).deleteById(0);
+        verify(categoryRepository, never()).deleteById(-1);
     }
 }
