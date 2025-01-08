@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 
@@ -34,13 +35,15 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addProduct(@RequestBody @Valid SaveProductDTO product) {
-        return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
+    public ResponseEntity<?> addProduct(@RequestBody @Valid SaveProductDTO product,
+                                        @RequestPart(required = false) MultipartFile file) {
+        return new ResponseEntity<>(productService.save(product, file), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateProduct(@RequestBody @Valid ProductDTO product) {
-        return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
+    public ResponseEntity<?> updateProduct(@RequestBody @Valid ProductDTO product,
+                                           @RequestPart(required = false) MultipartFile file) {
+        return new ResponseEntity<>(productService.update(product, file), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

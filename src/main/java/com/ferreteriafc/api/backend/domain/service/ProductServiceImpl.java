@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 import com.ferreteriafc.api.backend.persistence.entity.Product;
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductDTO save(SaveProductDTO productDTO) {
+    public ProductDTO save(SaveProductDTO productDTO, MultipartFile image) {
         String productCode = productDTO.getCode();
 
         if (productRepository.existsByCode(productCode))
@@ -60,7 +61,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductDTO update(ProductDTO productDTO) {
+    public ProductDTO update(ProductDTO productDTO, MultipartFile file) {
         Integer id = productDTO.getId();
 
         validateId(id);
