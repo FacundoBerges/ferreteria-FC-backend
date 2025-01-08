@@ -25,7 +25,7 @@ public class Product {
     @Column(name = "img_url")
     private String imgUrl;
 
-    @Column(precision = 10, scale = 2)
+    @Column()
     private Double price;
 
     @ManyToOne
