@@ -64,6 +64,8 @@ public class BrandServiceImpl implements IBrandService {
         Brand brand = brandMapper.toBrand(brandDTO);
         Integer id = brand.getId();
 
+        validateId(id);
+
         if( ! brandRepository.existsById(id) )
             throw new NotFoundException("Brand does not exist.");
 

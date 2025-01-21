@@ -4,14 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
 
 import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
+import com.ferreteriafc.api.backend.domain.mapper.ProductMapper;
+import com.ferreteriafc.api.backend.persistence.repository.ProductRepository;
 import com.ferreteriafc.api.backend.persistence.entity.Product;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
-import com.ferreteriafc.api.backend.domain.mapper.ProductMapper;
-import com.ferreteriafc.api.backend.persistence.repository.ProductRepository;
+import com.ferreteriafc.api.backend.web.dto.BrandDTO;
+import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.ProductDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 
@@ -19,24 +20,39 @@ import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 public class ProductServiceImpl implements IProductService{
 
     private final ProductRepository productRepository;
+    private final IBrandService brandService;
+    private final ICategoryService categoryService;
     private final ProductMapper productMapper;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+    public ProductServiceImpl(
+            ProductRepository productRepository,
+            IBrandService brandService,
+            ICategoryService categoryService,
+            ProductMapper productMapper) {
         this.productRepository = productRepository;
+        this.brandService = brandService;
+        this.categoryService = categoryService;
         this.productMapper = productMapper;
     }
 
     @Override
-    public ProductDTO save(SaveProductDTO productDTO, MultipartFile image) {
-        String productCode = productDTO.getCode();
+    public ProductDTO save(SaveProductDTO saveProductDTO) {
+        String productCode = saveProductDTO.getCode();
 
         if (productRepository.existsByCode(productCode))
             throw new AlreadyExistException("Product already exists.");
 
-        Product product = productMapper.toProduct(productDTO);
+        BrandDTO brandDTO = brandService.findById(saveProductDTO.getBrandId());
+        CategoryDTO categoryDTO = categoryService.findById(saveProductDTO.getCategoryId());
 
-        return productMapper.toProductDTO( productRepository.save(product) );
+        ProductDTO productDTO = productMapper.toProductDTO(saveProductDTO);
+        productDTO.setBrandDTO(brandDTO);
+        productDTO.setCategoryDTO(categoryDTO);
+
+        Product entityProduct = productMapper.toProduct(productDTO);
+
+        return productMapper.toProductDTO( productRepository.save(entityProduct) );
     }
 
     @Override
@@ -61,7 +77,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductDTO update(ProductDTO productDTO, MultipartFile file) {
+    public ProductDTO update(ProductDTO productDTO) {
         Integer id = productDTO.getId();
 
         validateId(id);

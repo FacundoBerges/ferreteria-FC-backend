@@ -6,4 +6,6 @@ public interface IFileService {
 
     String uploadFile(MultipartFile file);
 
+    byte[] downloadFile(String fileName);
+
 }

@@ -12,9 +12,10 @@ import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 public interface CategoryMapper {
 
     @Mappings({
-        @Mapping(source = "categoryName", target = "name"),
-        @Mapping(source = "categoryImage", target = "imageUrl"),
-        @Mapping(target = "id", ignore = true)
+            @Mapping(source = "categoryName", target = "name"),
+            @Mapping(source = "categoryImage", target = "imageUrl"),
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "products", ignore = true)
     })
     Category toCategory(SaveCategoryDTO saveCategoryDTO);
 

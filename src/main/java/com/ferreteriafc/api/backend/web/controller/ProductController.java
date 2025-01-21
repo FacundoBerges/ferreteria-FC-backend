@@ -8,9 +8,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 
+import com.ferreteriafc.api.backend.domain.service.FileServiceImpl;
+import com.ferreteriafc.api.backend.domain.service.IFileService;
 import com.ferreteriafc.api.backend.domain.service.IProductService;
 import com.ferreteriafc.api.backend.domain.service.ProductServiceImpl;
 import com.ferreteriafc.api.backend.web.dto.ProductDTO;
+import com.ferreteriafc.api.backend.web.dto.request.NewProductDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 
 @RestController
@@ -18,10 +21,12 @@ import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 public class ProductController {
 
     private final IProductService productService;
+    private final IFileService fileService;
 
     @Autowired
-    public ProductController(ProductServiceImpl productService) {
+    public ProductController(ProductServiceImpl productService, FileServiceImpl fileService) {
         this.productService = productService;
+        this.fileService = fileService;
     }
 
     @GetMapping
@@ -35,15 +40,30 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addProduct(@RequestBody @Valid SaveProductDTO product,
-                                        @RequestPart(required = false) MultipartFile file) {
-        return new ResponseEntity<>(productService.save(product, file), HttpStatus.CREATED);
+    public ResponseEntity<?> addProduct(@RequestBody @Valid NewProductDTO product,
+                                        @RequestPart(name = "image", required = false) MultipartFile file) {
+        String filepath = fileService.uploadFile(file);
+
+        SaveProductDTO toSave = new SaveProductDTO(
+                                        product.getDescription(),
+                                        product.getCode(),
+                                        product.getPrice(),
+                                        filepath,
+                                        product.getBrandId(),
+                                        product.getCategoryId());
+
+        return new ResponseEntity<>(productService.save(toSave), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<?> updateProduct(@RequestBody @Valid ProductDTO product,
                                            @RequestPart(required = false) MultipartFile file) {
-        return new ResponseEntity<>(productService.update(product, file), HttpStatus.OK);
+        String filepath = fileService.uploadFile(file);
+
+        if (filepath != null)
+            product.setImageUrl(filepath);
+
+        return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
