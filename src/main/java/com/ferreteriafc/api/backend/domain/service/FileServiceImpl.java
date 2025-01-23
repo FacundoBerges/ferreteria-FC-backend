@@ -1,61 +1,68 @@
 package com.ferreteriafc.api.backend.domain.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.servlet.ServletContext;
 
 import com.ferreteriafc.api.backend.web.exception.InvalidImageFileException;
 
 @Service
 public class FileServiceImpl implements IFileService {
 
-    private final ServletContext servletContext;
-    private final String UPLOAD_PATH = "resources/uploads";
+    private final Environment env;
 
     @Autowired
-    public FileServiceImpl(ServletContext servletContext) {
-        this.servletContext = servletContext;
+    public FileServiceImpl(Environment env) {
+        this.env = env;
     }
 
 
     @Override
     public String uploadFile(MultipartFile file) {
         if (file == null || file.isEmpty())
-            return null;
+            throw new InvalidImageFileException("No file provided.");
 
-        String fileName = file.getResource().getFilename();
+        String fileName = file.getOriginalFilename();
 
-        if (fileName == null || fileName.isEmpty() || ! isValidImage(file))
+        if (fileName == null || fileName.isEmpty() || ! isValidImage(fileName))
             throw new InvalidImageFileException("File is not a valid image. Supported extensions are: jpg, jpeg, png, webp, svg.");
 
-        String absolutePath = servletContext.getRealPath(UPLOAD_PATH);
+        String uploadDirectory = env.getProperty("upload.dir");
 
-        if (absolutePath == null || absolutePath.isEmpty())
-            return null;
+        if (uploadDirectory == null || uploadDirectory.isEmpty())
+            throw new InvalidImageFileException("No upload path provided.");
 
-        String filePath = absolutePath + File.separator + fileName;
+        Path uploadPath = Path.of(uploadDirectory);
 
         try {
-            file.transferTo(new File(filePath));
+            Path uploadDirectoryPath = Files.createDirectories(uploadPath);
+            Path filePath = uploadDirectoryPath.resolve(fileName);
+
+            Files.write(filePath, file.getBytes());
         } catch (IOException e) {
-            throw new InvalidImageFileException("File could not be uploaded. Please try again.");
+            throw new InvalidImageFileException("File could not be uploaded: " + e.getMessage());
         }
 
-        return filePath;
+        return fileName;
     }
 
     @Override
-    public byte[] downloadFile(String filePath) {
+    public byte[] downloadFile(String fileName) {
         byte[] file;
+        String uploadDirectory = env.getProperty("upload.dir");
+
+        if (uploadDirectory == null || uploadDirectory.isEmpty())
+            throw new InvalidImageFileException("No upload path provided.");
+
+        Path filePath = Path.of(uploadDirectory + "/" + fileName);
 
         try {
-            file = Files.readAllBytes(new File(filePath).toPath());
+            file = Files.readAllBytes(filePath);
         }catch (IOException e) {
             throw new InvalidImageFileException("File could not be downloaded. Please try again.");
         }
@@ -63,9 +70,7 @@ public class FileServiceImpl implements IFileService {
         return file;
     }
 
-    private boolean isValidImage(MultipartFile file) {
-        String originalFilename = file.getOriginalFilename();
-
+    private boolean isValidImage(String originalFilename) {
         if (originalFilename == null || originalFilename.isEmpty())
             return false;
 
