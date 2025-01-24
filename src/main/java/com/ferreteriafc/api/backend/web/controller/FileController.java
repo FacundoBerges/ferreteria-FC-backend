@@ -30,12 +30,12 @@ public class FileController {
         byte[] file = fileService.downloadFile(fileName);
         String mimeType = URLConnection.guessContentTypeFromName(fileName);
 
-        var headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(mimeType));
+        var httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.parseMediaType(mimeType));
 
         return ResponseEntity
                     .ok()
-                    .headers(headers)
+                    .headers(httpHeaders)
                     .body(file);
     }
 
