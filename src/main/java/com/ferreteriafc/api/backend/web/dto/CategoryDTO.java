@@ -1,8 +1,8 @@
 package com.ferreteriafc.api.backend.web.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ public class CategoryDTO {
     @JsonProperty("category_id")
     @NotNull(message = "Id must not be null.")
     @Positive(message = "Id must be a positive number.")
-    private Long categoryId;
+    private Integer categoryId;
 
     @JsonProperty("category_name")
     @NotBlank(message = "Name cannot be blank.")
@@ -24,8 +24,6 @@ public class CategoryDTO {
     private String categoryName;
 
     @JsonProperty("category_image")
-    @NotEmpty(message = "Image URL cannot be empty.")
-    @Size(min = 1, max = Constant.CATEGORIES_URL_MAX_LENGTH, message = "Image URL length must be between {min} and {max} characters.")
     private String categoryImage;
 
 }

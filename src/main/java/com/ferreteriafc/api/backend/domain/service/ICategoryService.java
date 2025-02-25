@@ -11,10 +11,10 @@ public interface ICategoryService {
 
     List<CategoryDTO> findAll();
 
-    CategoryDTO findById(Long id);
+    CategoryDTO findById(Integer id);
 
-    CategoryDTO update(CategoryDTO categoryDto);
+    CategoryDTO update(Integer id, CategoryDTO categoryDto);
 
-    void delete(Long id);
+    void delete(Integer id);
 
 }

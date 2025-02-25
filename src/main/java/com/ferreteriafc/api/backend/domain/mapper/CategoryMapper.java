@@ -12,9 +12,10 @@ import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 public interface CategoryMapper {
 
     @Mappings({
-        @Mapping(source = "categoryName", target = "name"),
-        @Mapping(source = "categoryImage", target = "imageUrl"),
-        @Mapping(target = "id", ignore = true)
+            @Mapping(source = "categoryName", target = "name"),
+            @Mapping(source = "categoryImage", target = "imageUrl"),
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "products", ignore = true)
     })
     Category toCategory(SaveCategoryDTO saveCategoryDTO);
 
@@ -27,7 +28,13 @@ public interface CategoryMapper {
 
     List<CategoryDTO> toCategoryDTOList(List<Category> categoryList);
 
-    @InheritInverseConfiguration
+    @Named("toCategory")
+    @Mappings({
+        @Mapping(source = "categoryId", target = "id"),
+        @Mapping(source = "categoryName", target = "name"),
+        @Mapping(source = "categoryImage", target = "imageUrl"),
+        @Mapping(target = "products", ignore = true)
+    })
     Category toCategory(CategoryDTO categoryDTO);
 
 }

@@ -60,17 +60,17 @@ public class CategoryControllerTest {
     @Test
     @DisplayName("Method: getCategoryById() - when existing category should return categoryDTO with http status code 200 (Ok)")
     void getCategoryById_whenCalledAndCategoryExist_shouldReturnCategoryDTOAndStatus200() {
-        when(categoryService.findById(anyLong())).thenReturn(categoryDTO);
+        when(categoryService.findById(anyInt())).thenReturn(categoryDTO);
         ResponseEntity<?> expectedResponse = ResponseEntity.ok(categoryDTO);
 
-        ResponseEntity<?> testResponseEntity = categoryController.getCategoryById(1L);
+        ResponseEntity<?> testResponseEntity = categoryController.getCategoryById(1);
 
         assertAll("getCategoryById",
             () -> assertEquals(expectedResponse, testResponseEntity),
             () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
             () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
         );
-        verify( categoryService , times(1)).findById(anyLong());
+        verify( categoryService , times(1)).findById(anyInt());
     }
 
     @Test
@@ -92,17 +92,17 @@ public class CategoryControllerTest {
     @Test
     @DisplayName("Method: updateCategory() - when category exist and could be updated should return categoryDTO with http status code 200 (Ok)")
     void updateCategory_whenCalledAndCategoryExist_shouldReturnCategoryDTOAndStatus200() {
-        when(categoryService.update(any(CategoryDTO.class))).thenReturn(categoryDTO);
+        when(categoryService.update(anyInt(), any(CategoryDTO.class))).thenReturn(categoryDTO);
         ResponseEntity<?> expectedResponse = ResponseEntity.ok(categoryDTO);
 
-        ResponseEntity<?> testResponseEntity = categoryController.updateCategory(categoryDTO);
+        ResponseEntity<?> testResponseEntity = categoryController.updateCategory(anyInt(), categoryDTO);
 
         assertAll("getCategoryById",
             () -> assertEquals(expectedResponse, testResponseEntity),
             () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
             () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
         );
-        verify( categoryService , times(1)).update(any(CategoryDTO.class));
+        verify( categoryService , times(1)).update(anyInt(), any(CategoryDTO.class));
     }
 
     @Test
@@ -110,12 +110,12 @@ public class CategoryControllerTest {
     void deleteCategory_whenCategoryExist_shouldReturnHttpStatus204() {
         ResponseEntity<?> expectedResponse = ResponseEntity.noContent().build();
 
-        ResponseEntity<?> testResponseEntity = categoryController.deleteCategory(1L);
+        ResponseEntity<?> testResponseEntity = categoryController.deleteCategory(1);
 
         assertAll("getCategoryById",
             () -> assertEquals(expectedResponse, testResponseEntity),
             () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode())
         );
-        verify( categoryService , times(1)).delete(1L);
+        verify( categoryService , times(1)).delete(1);
     }
 }
