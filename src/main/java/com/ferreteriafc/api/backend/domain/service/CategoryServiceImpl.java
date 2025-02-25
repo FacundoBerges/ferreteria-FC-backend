@@ -59,13 +59,12 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     @Override
-    public CategoryDTO update(CategoryDTO categoryDto) {
+    public CategoryDTO update(Integer id, CategoryDTO categoryDto) {
+        validateId(id);
+
         Category category = categoryMapper.toCategory(categoryDto);
-        Integer categoryId = category.getId();
 
-        validateId(categoryId);
-
-        if ( ! categoryRepository.existsById( categoryId ) )
+        if ( ! categoryRepository.existsById( id ) )
             throw new NotFoundException("Category does not exist.");
 
         return categoryMapper.toCategoryDTO( categoryRepository.save( category ) );

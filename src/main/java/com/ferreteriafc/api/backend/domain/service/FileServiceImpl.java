@@ -2,6 +2,7 @@ package com.ferreteriafc.api.backend.domain.service;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +60,18 @@ public class FileServiceImpl implements IFileService {
         if (uploadDirectory == null || uploadDirectory.isEmpty())
             throw new InvalidImageFileException("No upload path provided.");
 
-        Path filePath = Path.of(uploadDirectory + "/" + fileName);
+        Path uploadPath = Path.of(uploadDirectory);
+        Path filePath = uploadPath.resolve(fileName);
 
         try {
+            System.out.println(filePath);
             file = Files.readAllBytes(filePath);
-        }catch (IOException e) {
-            throw new InvalidImageFileException("File could not be downloaded. Please try again.");
+        }
+        catch (NoSuchFileException e) {
+            throw new InvalidImageFileException("File not found: " + fileName);
+        }
+        catch (IOException e) {
+            throw new InvalidImageFileException("File could not be downloaded: " + e.getMessage());
         }
 
         return file;

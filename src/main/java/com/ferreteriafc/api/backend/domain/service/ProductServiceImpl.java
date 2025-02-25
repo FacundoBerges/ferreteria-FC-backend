@@ -11,8 +11,6 @@ import com.ferreteriafc.api.backend.persistence.repository.ProductRepository;
 import com.ferreteriafc.api.backend.persistence.entity.Product;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.ProductDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 
@@ -20,19 +18,11 @@ import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 public class ProductServiceImpl implements IProductService{
 
     private final ProductRepository productRepository;
-    private final IBrandService brandService;
-    private final ICategoryService categoryService;
     private final ProductMapper productMapper;
 
     @Autowired
-    public ProductServiceImpl(
-            ProductRepository productRepository,
-            IBrandService brandService,
-            ICategoryService categoryService,
-            ProductMapper productMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
-        this.brandService = brandService;
-        this.categoryService = categoryService;
         this.productMapper = productMapper;
     }
 
@@ -43,14 +33,7 @@ public class ProductServiceImpl implements IProductService{
         if (productRepository.existsByCode(productCode))
             throw new AlreadyExistException("Product already exists.");
 
-        BrandDTO brandDTO = brandService.findById(saveProductDTO.getBrandId());
-        CategoryDTO categoryDTO = categoryService.findById(saveProductDTO.getCategoryId());
-
-        ProductDTO productDTO = productMapper.toProductDTO(saveProductDTO);
-        productDTO.setBrandDTO(brandDTO);
-        productDTO.setCategoryDTO(categoryDTO);
-
-        Product entityProduct = productMapper.toProduct(productDTO);
+        Product entityProduct = productMapper.toProduct(saveProductDTO);
 
         return productMapper.toProductDTO( productRepository.save(entityProduct) );
     }
@@ -77,9 +60,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public ProductDTO update(ProductDTO productDTO) {
-        Integer id = productDTO.getId();
-
+    public ProductDTO update(Integer id, ProductDTO productDTO) {
         validateId(id);
 
         if ( ! productRepository.existsById(id) )

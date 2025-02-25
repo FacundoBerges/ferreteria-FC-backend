@@ -167,7 +167,7 @@ public class CategoryServiceTest {
         when(categoryMapper.toCategoryDTO(any(Category.class))).thenReturn(categoryDTO);
         when(categoryMapper.toCategory(any(CategoryDTO.class))).thenReturn(category);
 
-        CategoryDTO testCategoryDTO = categoryService.update(categoryDTO);
+        CategoryDTO testCategoryDTO = categoryService.update(anyInt(), categoryDTO);
 
         assertAll("UpdatedCategory",
             () -> assertNotNull(testCategoryDTO),
@@ -182,7 +182,7 @@ public class CategoryServiceTest {
         when(categoryMapper.toCategory(any(CategoryDTO.class))).thenReturn(category);
         when(categoryRepository.existsById(anyInt())).thenReturn(false);
 
-        assertThrows(NotFoundException.class, () -> categoryService.update(categoryDTO));
+        assertThrows(NotFoundException.class, () -> categoryService.update(anyInt(), categoryDTO));
     }
 
     @Test

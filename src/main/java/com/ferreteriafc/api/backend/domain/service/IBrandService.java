@@ -13,7 +13,7 @@ public interface IBrandService {
 
     BrandDTO findById(Integer id);
 
-    BrandDTO update(BrandDTO brandDTO);
+    BrandDTO update(Integer id, BrandDTO brandDTO);
 
     void delete(Integer id);
 

@@ -60,11 +60,10 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public BrandDTO update(BrandDTO brandDTO) {
-        Brand brand = brandMapper.toBrand(brandDTO);
-        Integer id = brand.getId();
-
+    public BrandDTO update(Integer id, BrandDTO brandDTO) {
         validateId(id);
+
+        Brand brand = brandMapper.toBrand(brandDTO);
 
         if( ! brandRepository.existsById(id) )
             throw new NotFoundException("Brand does not exist.");

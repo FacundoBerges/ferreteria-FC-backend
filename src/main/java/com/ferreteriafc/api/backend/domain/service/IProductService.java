@@ -13,7 +13,7 @@ public interface IProductService {
 
     ProductDTO findById(Integer id);
 
-    ProductDTO update(ProductDTO productDTO);
+    ProductDTO update(Integer id, ProductDTO productDTO);
 
     void delete(Integer id);
 

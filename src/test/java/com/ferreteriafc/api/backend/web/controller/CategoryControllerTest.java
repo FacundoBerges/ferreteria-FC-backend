@@ -92,17 +92,17 @@ public class CategoryControllerTest {
     @Test
     @DisplayName("Method: updateCategory() - when category exist and could be updated should return categoryDTO with http status code 200 (Ok)")
     void updateCategory_whenCalledAndCategoryExist_shouldReturnCategoryDTOAndStatus200() {
-        when(categoryService.update(any(CategoryDTO.class))).thenReturn(categoryDTO);
+        when(categoryService.update(anyInt(), any(CategoryDTO.class))).thenReturn(categoryDTO);
         ResponseEntity<?> expectedResponse = ResponseEntity.ok(categoryDTO);
 
-        ResponseEntity<?> testResponseEntity = categoryController.updateCategory(categoryDTO);
+        ResponseEntity<?> testResponseEntity = categoryController.updateCategory(anyInt(), categoryDTO);
 
         assertAll("getCategoryById",
             () -> assertEquals(expectedResponse, testResponseEntity),
             () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
             () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
         );
-        verify( categoryService , times(1)).update(any(CategoryDTO.class));
+        verify( categoryService , times(1)).update(anyInt(), any(CategoryDTO.class));
     }
 
     @Test

@@ -93,17 +93,17 @@ public class BrandControllerTest {
     @Test
     @DisplayName("Method: updateBrand() - when brand exist and could be updated should return brandDTO with http status code 200 (Ok)")
     void updateBrand_whenCalledAndBrandExist_shouldReturnBrandDTOAndStatus200() {
-        when(brandService.update(any(BrandDTO.class))).thenReturn(brandDTO);
+        when(brandService.update(anyInt(), any(BrandDTO.class))).thenReturn(brandDTO);
         ResponseEntity<?> expectedResponse = ResponseEntity.ok(brandDTO);
 
-        ResponseEntity<?> testResponseEntity = brandController.updateBrand(brandDTO);
+        ResponseEntity<?> testResponseEntity = brandController.updateBrand(anyInt(), brandDTO);
 
         assertAll("updateBrand",
             () -> assertEquals(expectedResponse, testResponseEntity),
             () -> assertEquals(expectedResponse.getStatusCode(), testResponseEntity.getStatusCode()),
             () -> assertEquals(expectedResponse.getBody(), testResponseEntity.getBody())
         );
-        verify(brandService, times(1)).update(any(BrandDTO.class));
+        verify(brandService, times(1)).update(anyInt(), any(BrandDTO.class));
     }
 
     @Test

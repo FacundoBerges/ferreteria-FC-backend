@@ -19,7 +19,6 @@ public interface ProductMapper {
         @Mapping(source = "code", target = "code"),
         @Mapping(source = "description", target = "description"),
         @Mapping(source = "imgUrl", target = "imageUrl"),
-        @Mapping(source = "price", target = "price"),
         @Mapping(source = "brand", target = "brandDTO"),
         @Mapping(source = "category", target = "categoryDTO")
     })
@@ -29,25 +28,20 @@ public interface ProductMapper {
         @Mapping(source = "code", target = "code"),
         @Mapping(source = "description", target = "description"),
         @Mapping(source = "imageUrl", target = "imgUrl"),
-        @Mapping(source = "price", target = "price"),
-        @Mapping(source = "brandId", target = "brand.id"),
-        @Mapping(source = "categoryId", target = "category.id"),
+        @Mapping(source = "brandDTO", target = "brand"),
+        @Mapping(source = "categoryDTO", target = "category", qualifiedByName = "toCategory"),
         @Mapping(target = "id", ignore = true)
     })
     Product toProduct(SaveProductDTO saveProductDTO);
 
     @Mappings({
-        @Mapping(source = "description", target = "description"),
+        @Mapping(source = "id", target = "id"),
         @Mapping(source = "code", target = "code"),
-        @Mapping(source = "price", target = "price"),
-        @Mapping(source = "imageUrl", target = "imageUrl"),
-        @Mapping(target = "id", ignore = true),
-        @Mapping(target = "brandDTO", ignore = true),
-        @Mapping(target = "categoryDTO", ignore = true)
+        @Mapping(source = "description", target = "description"),
+        @Mapping(source = "imageUrl", target = "imgUrl"),
+        @Mapping(source = "brandDTO", target = "brand"),
+        @Mapping(source = "categoryDTO", target = "category", qualifiedByName = "toCategory"),
     })
-    ProductDTO toProductDTO(SaveProductDTO saveProductDTO);
-
-    @InheritInverseConfiguration
     Product toProduct(ProductDTO product);
 
     List<ProductDTO> toProductDTOList(List<Product> products);

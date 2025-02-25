@@ -1,11 +1,11 @@
 package com.ferreteriafc.api.backend.web.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.validation.Valid;
 
 import com.ferreteriafc.api.backend.domain.service.IProductService;
 import com.ferreteriafc.api.backend.domain.service.ProductServiceImpl;
@@ -38,9 +38,9 @@ public class ProductController {
         return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateProduct(@RequestBody @Valid ProductDTO product) {
-        return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable Integer id, @RequestBody @Valid ProductDTO product) {
+        return new ResponseEntity<>(productService.update(id, product), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

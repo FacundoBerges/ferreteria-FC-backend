@@ -19,17 +19,14 @@ public class Product {
     @Column(unique = true, nullable = false)
     private String code;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String description;
 
     @Column(name = "img_url")
     private String imgUrl;
 
-    @Column()
-    private Double price;
-
     @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
 
     @ManyToOne

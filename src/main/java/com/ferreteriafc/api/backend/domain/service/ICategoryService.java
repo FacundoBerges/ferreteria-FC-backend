@@ -13,7 +13,7 @@ public interface ICategoryService {
 
     CategoryDTO findById(Integer id);
 
-    CategoryDTO update(CategoryDTO categoryDto);
+    CategoryDTO update(Integer id, CategoryDTO categoryDto);
 
     void delete(Integer id);
 

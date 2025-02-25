@@ -24,7 +24,6 @@ public class FileController {
         this.fileService = fileService;
     }
 
-
     @GetMapping("/{fileName}")
     public ResponseEntity<?> handleFileDownload(@PathVariable String fileName) {
         byte[] file = fileService.downloadFile(fileName);
