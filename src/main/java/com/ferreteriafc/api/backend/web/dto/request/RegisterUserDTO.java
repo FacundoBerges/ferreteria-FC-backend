@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-public class SaveUserDTO {
+public class RegisterUserDTO {
 
     private String username;
 

@@ -5,23 +5,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ferreteriafc.api.backend.domain.service.UserDetailsServiceImpl;
-import com.ferreteriafc.api.backend.web.dto.request.SaveUserDTO;
+import com.ferreteriafc.api.backend.domain.service.UserServiceImpl;
+import com.ferreteriafc.api.backend.web.dto.request.RegisterUserDTO;
 import com.ferreteriafc.api.backend.web.dto.UserDTO;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserServiceImpl userDetailsService;
 
     @Autowired
-    public AuthController(UserDetailsServiceImpl userDetailsService) {
+    public AuthController(UserServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody SaveUserDTO user) {
+    public ResponseEntity<?> registerUser(@RequestBody RegisterUserDTO user) {
         //TODO: Implement method.
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
