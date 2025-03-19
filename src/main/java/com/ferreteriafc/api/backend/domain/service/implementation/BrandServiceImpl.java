@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.domain.service;
+package com.ferreteriafc.api.backend.domain.service.implementation;
 
 import java.util.List;
 
@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 import com.ferreteriafc.api.backend.domain.mapper.BrandMapper;
+import com.ferreteriafc.api.backend.domain.service.IBrandService;
 import com.ferreteriafc.api.backend.persistence.entity.Brand;
 import com.ferreteriafc.api.backend.persistence.repository.BrandRepository;
 import com.ferreteriafc.api.backend.web.dto.BrandDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
+import com.ferreteriafc.api.backend.web.exception.EmptyListException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 @Service
@@ -43,7 +45,7 @@ public class BrandServiceImpl implements IBrandService {
         List<Brand> brands = brandRepository.findAll();
 
         if (brands.isEmpty())
-            throw new NotFoundException("No brands found.");
+            throw new EmptyListException("No brands found.");
 
         return brandMapper.toBrandDTOList(brands);
     }

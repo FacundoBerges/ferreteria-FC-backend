@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ferreteriafc.api.backend.domain.service.IBrandService;
-import com.ferreteriafc.api.backend.domain.service.BrandServiceImpl;
 import com.ferreteriafc.api.backend.web.dto.BrandDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 
@@ -19,7 +18,7 @@ public class BrandController {
     private final IBrandService brandService;
 
     @Autowired
-    public BrandController(BrandServiceImpl brandService) {
+    public BrandController(IBrandService brandService) {
         this.brandService = brandService;
     }
 

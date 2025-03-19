@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.ferreteriafc.api.backend.domain.service.BrandServiceImpl;
+import com.ferreteriafc.api.backend.domain.service.implementation.BrandServiceImpl;
 import com.ferreteriafc.api.backend.domain.utils.MockObjectFactory;
 import com.ferreteriafc.api.backend.web.dto.BrandDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;

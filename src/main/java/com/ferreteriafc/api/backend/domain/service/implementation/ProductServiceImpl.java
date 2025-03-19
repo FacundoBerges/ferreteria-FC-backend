@@ -1,21 +1,24 @@
-package com.ferreteriafc.api.backend.domain.service;
+package com.ferreteriafc.api.backend.domain.service.implementation;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 import com.ferreteriafc.api.backend.domain.mapper.ProductMapper;
+import com.ferreteriafc.api.backend.domain.service.IProductService;
 import com.ferreteriafc.api.backend.persistence.repository.ProductRepository;
 import com.ferreteriafc.api.backend.persistence.entity.Product;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
+import com.ferreteriafc.api.backend.web.exception.EmptyListException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 import com.ferreteriafc.api.backend.web.dto.ProductDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 
 @Service
-public class ProductServiceImpl implements IProductService{
+public class ProductServiceImpl implements IProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
@@ -43,7 +46,7 @@ public class ProductServiceImpl implements IProductService{
         List<Product> products = productRepository.findAll();
 
         if (products.isEmpty())
-            throw new NotFoundException("No products found.");
+            throw new EmptyListException("No products found.");
 
         return productMapper.toProductDTOList(products);
     }
@@ -63,12 +66,17 @@ public class ProductServiceImpl implements IProductService{
     public ProductDTO update(Integer id, ProductDTO productDTO) {
         validateId(id);
 
-        if ( ! productRepository.existsById(id) )
-            throw new NotFoundException("Product does not exist.");
+        Product repositoryProduct = getProductFromRepository(id)
+                                        .orElseThrow(() -> new NotFoundException("Product not found."));
+        Product toUpdateProduct = productMapper.toProduct(productDTO);
 
-        Product product = productMapper.toProduct(productDTO);
+        repositoryProduct.setCode(toUpdateProduct.getCode());
+        repositoryProduct.setDescription(toUpdateProduct.getDescription());
+        repositoryProduct.setImgUrl(toUpdateProduct.getImgUrl());
+        repositoryProduct.setBrand(toUpdateProduct.getBrand());
+        repositoryProduct.setCategory(toUpdateProduct.getCategory());
 
-        return productMapper.toProductDTO( productRepository.save(product) );
+        return productMapper.toProductDTO( productRepository.save(repositoryProduct) );
     }
 
     @Override
@@ -80,4 +88,9 @@ public class ProductServiceImpl implements IProductService{
 
         productRepository.deleteById(id);
     }
+
+    private Optional<Product> getProductFromRepository(Integer id) {
+        return productRepository.findById(id);
+    }
+
 }

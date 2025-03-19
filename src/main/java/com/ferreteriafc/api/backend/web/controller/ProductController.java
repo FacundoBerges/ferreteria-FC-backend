@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ferreteriafc.api.backend.domain.service.IProductService;
-import com.ferreteriafc.api.backend.domain.service.ProductServiceImpl;
 import com.ferreteriafc.api.backend.web.dto.ProductDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
 
@@ -19,7 +18,7 @@ public class ProductController {
     private final IProductService productService;
 
     @Autowired
-    public ProductController(ProductServiceImpl productService) {
+    public ProductController(IProductService productService) {
         this.productService = productService;
     }
 

@@ -1,9 +1,10 @@
-package com.ferreteriafc.api.backend.domain.service;
+package com.ferreteriafc.api.backend.domain.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ferreteriafc.api.backend.domain.mapper.RoleMapper;
+import com.ferreteriafc.api.backend.domain.service.IRoleService;
 import com.ferreteriafc.api.backend.persistence.entity.Role;
 import com.ferreteriafc.api.backend.persistence.repository.RoleRepository;
 import com.ferreteriafc.api.backend.web.dto.RoleDTO;
@@ -27,7 +28,7 @@ public class RoleServiceImpl implements IRoleService {
                         .findByName(name)
                         .orElseThrow(()-> new NotFoundException("Role not found"));
 
-        return roleMapper.roleToRoleDTO(role);
+        return roleMapper.toRoleDTO(role);
     }
 
 }

@@ -14,8 +14,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
-
-        WebMvcConfigurer.super.addCorsMappings(registry);
     }
 
 }

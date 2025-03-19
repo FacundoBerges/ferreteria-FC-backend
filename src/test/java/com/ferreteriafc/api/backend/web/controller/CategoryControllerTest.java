@@ -16,7 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.ferreteriafc.api.backend.domain.service.CategoryServiceImpl;
+import com.ferreteriafc.api.backend.domain.service.implementation.CategoryServiceImpl;
 import com.ferreteriafc.api.backend.domain.utils.MockObjectFactory;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;

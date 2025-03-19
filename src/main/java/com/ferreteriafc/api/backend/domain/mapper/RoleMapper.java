@@ -15,9 +15,9 @@ public interface RoleMapper {
         @Mapping(source = "id", target = "id"),
         @Mapping(source = "name", target = "roleName")
     })
-    RoleDTO roleToRoleDTO(Role role);
+    RoleDTO toRoleDTO(Role role);
 
     @InheritInverseConfiguration
-    Role roleDTOToRole(RoleDTO roleDTO);
+    Role toRole(RoleDTO roleDTO);
 
 }

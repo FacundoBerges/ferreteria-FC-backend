@@ -7,6 +7,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
+import com.ferreteriafc.api.backend.domain.service.implementation.CategoryServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.BeforeEach;

@@ -15,6 +15,6 @@ public interface UserMapper {
         @Mapping(source = "email", target = "email"),
         @Mapping(source = "username", target = "username"),
     })
-    UserDTO userToUserDTO(User user);
+    UserDTO toUserDTO(User user);
 
 }

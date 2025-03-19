@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.domain.service;
+package com.ferreteriafc.api.backend.domain.service.implementation;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ferreteriafc.api.backend.domain.service.IFileService;
 import com.ferreteriafc.api.backend.web.exception.InvalidImageFileException;
 
 @Service

@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.domain.service;
+package com.ferreteriafc.api.backend.domain.service.implementation;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,41 +8,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ferreteriafc.api.backend.domain.mapper.RoleMapper;
 import com.ferreteriafc.api.backend.domain.mapper.UserMapper;
+import com.ferreteriafc.api.backend.domain.service.IJwtService;
+import com.ferreteriafc.api.backend.domain.service.IRoleService;
+import com.ferreteriafc.api.backend.domain.service.IUserService;
+import com.ferreteriafc.api.backend.domain.utils.Validation;
 import com.ferreteriafc.api.backend.persistence.entity.Role;
 import com.ferreteriafc.api.backend.persistence.entity.User;
 import com.ferreteriafc.api.backend.persistence.repository.UserRepository;
 import com.ferreteriafc.api.backend.web.dto.RoleDTO;
 import com.ferreteriafc.api.backend.web.dto.UserDTO;
-import com.ferreteriafc.api.backend.web.dto.request.RegisterUserDTO;
+import com.ferreteriafc.api.backend.web.dto.request.RegisterAndLoginUserDTO;
+import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 @Service
-public class UserServiceImpl implements UserDetailsService, IUserService {
+public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final IRoleService roleService;
     private final RoleMapper roleMapper;
     private final PasswordEncoder passwordEncoder;
+    private final IJwtService jwtService;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            UserMapper userMapper,
                            IRoleService roleService,
                            RoleMapper roleMapper,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder,
+                           IJwtService jwtService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleService = roleService;
         this.roleMapper = roleMapper;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -64,22 +71,40 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     }
 
     @Override
-    public UserDTO save(RegisterUserDTO userDTO) {
+    public UserDTO save(RegisterAndLoginUserDTO userDTO) {
+        Validation.validateEmail(userDTO.getEmail());
+        Validation.validatePassword(userDTO.getPassword());
+
+        if (userRepository.findByUsername(userDTO.getUsername()).isPresent())
+            throw new AlreadyExistException("User already exists with username: " + userDTO.getUsername());
+
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent())
+            throw new AlreadyExistException("User already exists with email: " + userDTO.getEmail());
+
         Set<Role> roles = new HashSet<>();
-        String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
+
         RoleDTO defaultRole = roleService.findByName("ROLE_USER");
+        String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
 
-        roles.add(roleMapper.roleDTOToRole(defaultRole));
+        roles.add(roleMapper.toRole(defaultRole));
 
-        User user = new User(
-            null,
-            userDTO.getUsername(),
-            hashedPassword,
-            userDTO.getEmail(),
-            roles
-        );
+        User user = User.builder()
+                        .id(null)
+                        .username(userDTO.getUsername())
+                        .hashedPassword(hashedPassword)
+                        .email(userDTO.getEmail())
+                        .roles(roles)
+                        .build();
 
-        return userMapper.userToUserDTO(userRepository.save(user));
+        return userMapper.toUserDTO(userRepository.save(user));
+    }
+
+    @Override
+    public String login(RegisterAndLoginUserDTO userDTO) {
+        Validation.validateEmail(userDTO.getEmail());
+        Validation.validatePassword(userDTO.getPassword());
+
+        return jwtService.generateToken(loadUserByUsername(userDTO.getUsername()));
     }
 
     @Override
@@ -88,7 +113,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
                 .findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("User not found by username: " + username));
 
-        return userMapper.userToUserDTO(user);
+        return userMapper.toUserDTO(user);
     }
 
     @Override
@@ -97,7 +122,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
                 .findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found by email: " + email));
 
-        return userMapper.userToUserDTO(user);
+        return userMapper.toUserDTO(user);
     }
 
     private Collection<GrantedAuthority> getAuthorities(User user) {
@@ -113,4 +138,5 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
 
         return authorities;
     }
+
 }

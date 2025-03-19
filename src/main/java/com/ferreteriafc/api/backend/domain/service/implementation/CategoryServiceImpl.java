@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.domain.service;
+package com.ferreteriafc.api.backend.domain.service.implementation;
 
 import java.util.List;
 
@@ -7,15 +7,17 @@ import org.springframework.stereotype.Service;
 
 import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 import com.ferreteriafc.api.backend.domain.mapper.CategoryMapper;
+import com.ferreteriafc.api.backend.domain.service.ICategoryService;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
 import com.ferreteriafc.api.backend.persistence.repository.CategoryRepository;
 import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
+import com.ferreteriafc.api.backend.web.exception.EmptyListException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 @Service
-public class CategoryServiceImpl implements ICategoryService{
+public class CategoryServiceImpl implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
@@ -42,7 +44,7 @@ public class CategoryServiceImpl implements ICategoryService{
         List<Category> categories = categoryRepository.findAll();
 
         if ( categories.isEmpty() )
-            throw new NotFoundException("No categories found.");
+            throw new EmptyListException("No categories found.");
 
         return categoryMapper.toCategoryDTOList(categories);
     }

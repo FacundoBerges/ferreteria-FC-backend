@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ferreteriafc.api.backend.domain.service.CategoryServiceImpl;
 import com.ferreteriafc.api.backend.domain.service.ICategoryService;
 import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
 import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
@@ -19,7 +18,7 @@ public class CategoryController {
     private final ICategoryService categoryService;
 
     @Autowired
-    public CategoryController(CategoryServiceImpl categoryService) {
+    public CategoryController(ICategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

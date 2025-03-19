@@ -23,7 +23,7 @@ public class SaveProductDTO {
     private String description;
 
     @JsonProperty("product_code")
-    @Size(min = 1, max = Constant.PRODUCTS_DESCRIPTION_MAX_LENGTH, message = "Code length must be between {min} and {max}.")
+    @Size(min = 1, max = Constant.PRODUCTS_CODE_MAX_LENGTH, message = "Code length must be between {min} and {max}.")
     @NotBlank(message = "Code cannot be blank.")
     private String code;
 

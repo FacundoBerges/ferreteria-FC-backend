@@ -4,7 +4,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
+import com.ferreteriafc.api.backend.domain.service.implementation.BrandServiceImpl;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
