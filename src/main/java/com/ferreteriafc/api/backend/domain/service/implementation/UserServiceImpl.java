@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.ferreteriafc.api.backend.web.dto.response.AuthToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -100,11 +101,15 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public String login(RegisterAndLoginUserDTO userDTO) {
+    public AuthToken login(RegisterAndLoginUserDTO userDTO) {
         Validation.validateEmail(userDTO.getEmail());
         Validation.validatePassword(userDTO.getPassword());
 
-        return jwtService.generateToken(loadUserByUsername(userDTO.getUsername()));
+        String username = userDTO.getUsername();
+        UserDetails userDetails = loadUserByUsername(username);
+        String token = jwtService.generateToken(userDetails);
+
+        return new AuthToken(token);
     }
 
     @Override
