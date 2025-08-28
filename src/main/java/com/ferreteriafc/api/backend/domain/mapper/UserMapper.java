@@ -1,5 +1,7 @@
 package com.ferreteriafc.api.backend.domain.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -16,5 +18,7 @@ public interface UserMapper {
         @Mapping(source = "username", target = "username"),
     })
     UserDTO toUserDTO(User user);
+
+    List<UserDTO> toUserDTO(List<User> users);
 
 }
