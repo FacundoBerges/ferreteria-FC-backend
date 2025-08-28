@@ -26,7 +26,7 @@ public class Category {
     private String imageUrl;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     public Category(Integer id, String name, String imageUrl) {
         this.products = new ArrayList<>();

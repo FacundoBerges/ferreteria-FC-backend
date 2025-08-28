@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.ferreteriafc.api.backend.domain.utils.Constant;
+
 @Entity
 @Table(name = "products")
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
@@ -16,10 +18,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = Constant.PRODUCTS_CODE_MAX_LENGTH)
     private String code;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = Constant.PRODUCTS_DESCRIPTION_MAX_LENGTH)
     private String description;
 
     @Column(name = "img_url")
