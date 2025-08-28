@@ -59,9 +59,9 @@ public class ExceptionController {
         var httpStatus = HttpStatus.BAD_REQUEST;
         var errorsMap = new HashMap<String, String>();
 
-        ex.getFieldErrors().forEach(fieldError -> {
-            errorsMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-        });
+        ex.getFieldErrors().forEach(
+                fieldError -> errorsMap.put(fieldError.getField(), fieldError.getDefaultMessage())
+        );
 
         var response = new ValidationErrorsDTO(httpStatus.value(), httpStatus.getReasonPhrase(), errorsMap);
 
