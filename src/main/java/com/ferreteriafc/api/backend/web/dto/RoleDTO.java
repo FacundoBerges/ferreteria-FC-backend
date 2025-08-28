@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class RoleDTO {
 
-    @NotNull(message = "User id cannot be null.")
+    @NotNull(message = "Role id cannot be null.")
     @Positive(message = "Role id must be a positive number.")
     private Integer id;
 
