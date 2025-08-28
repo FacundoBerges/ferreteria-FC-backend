@@ -1,9 +1,11 @@
 package com.ferreteriafc.api.backend.domain.service;
 
+import com.ferreteriafc.api.backend.persistence.entity.Role;
 import com.ferreteriafc.api.backend.web.dto.RoleDTO;
 
 public interface IRoleService {
 
-    RoleDTO findByName(String name);
+    Role findByName(String name);
+    RoleDTO mapToDto(Role role);
 
 }
