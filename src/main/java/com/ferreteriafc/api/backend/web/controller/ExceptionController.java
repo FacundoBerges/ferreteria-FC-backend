@@ -68,22 +68,6 @@ public class ExceptionController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
-    @ExceptionHandler(exception = InvalidEmailException.class)
-    public ResponseEntity<?> handleInvalidEmail(InvalidEmailException ex){
-        var httpStatus = HttpStatus.BAD_REQUEST;
-        var response = new ErrorDTO(httpStatus.value(), httpStatus.getReasonPhrase(), ex.getMessage());
-
-        return new ResponseEntity<>(response, httpStatus);
-    }
-
-    @ExceptionHandler(exception = InvalidPasswordException.class)
-    public ResponseEntity<?> handleInvalidPassword(InvalidPasswordException ex){
-        var httpStatus = HttpStatus.BAD_REQUEST;
-        var response = new ErrorDTO(httpStatus.value(), httpStatus.getReasonPhrase(), ex.getMessage());
-
-        return new ResponseEntity<>(response, httpStatus);
-    }
-
     @ExceptionHandler(exception = InvalidJwtException.class)
     public ResponseEntity<?> handleInvalidJwt(InvalidJwtException ex){
         var httpStatus = HttpStatus.UNAUTHORIZED;
