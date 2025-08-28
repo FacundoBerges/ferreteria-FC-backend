@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import com.ferreteriafc.api.backend.domain.utils.Constant;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-public class RegisterAndLoginUserDTO {
+public class RegisterUserDTO {
 
     @NotBlank(message = "Username cannot be blank nor null.")
     @Size(min = Constant.USERNAME_MIN_LENGTH, max = Constant.USERNAME_MAX_LENGTH, message = "Username length must be between {min} and {max}.")
@@ -26,7 +26,7 @@ public class RegisterAndLoginUserDTO {
 
     @NotBlank(message = "Email cannot be blank nor null.")
     @Size(min = Constant.EMAIL_MIN_LENGTH, max = Constant.EMAIL_MAX_LENGTH, message = "Email length must be between {min} and {max}.")
-    @Email(regexp = Constant.EMAIL_REGEX_PATTERN, message = "Invalid email input. Expected format: 'email@domain.com'")
+    @Email(message = "Invalid email input.")
     private String email;
 
 }
