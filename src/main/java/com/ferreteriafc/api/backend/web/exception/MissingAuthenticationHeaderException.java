@@ -1,6 +1,8 @@
 package com.ferreteriafc.api.backend.web.exception;
 
-public class MissingAuthenticationHeaderException extends RuntimeException {
+import org.springframework.security.core.AuthenticationException;
+
+public class MissingAuthenticationHeaderException extends AuthenticationException {
 
     public MissingAuthenticationHeaderException(String message) {
         super(message);
