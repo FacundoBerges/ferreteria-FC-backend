@@ -1,6 +1,7 @@
-package com.ferreteriafc.api.backend.web.security;
+package com.ferreteriafc.api.backend.web.security.jwt;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,8 +20,11 @@ import com.ferreteriafc.api.backend.web.dto.response.ErrorDTO;
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
+    public void commence(HttpServletRequest request,
+                         HttpServletResponse response,
+                         AuthenticationException authException)
             throws IOException, ServletException {
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
@@ -28,7 +32,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         ObjectMapper objectMapper = new ObjectMapper();
 
         objectMapper.writeValue(response.getOutputStream(), body);
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
     }
 
 }

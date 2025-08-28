@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.web.security;
+package com.ferreteriafc.api.backend.web.security.jwt;
 
 import java.io.IOException;
 
@@ -10,15 +10,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.ferreteriafc.api.backend.domain.service.IUserService;
-import com.ferreteriafc.api.backend.web.exception.InvalidJwtException;
-import com.ferreteriafc.api.backend.web.exception.MissingAuthenticationHeaderException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -33,32 +30,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
             throws ServletException, IOException {
         String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (authorization == null || authorization.isEmpty())
-            throw new MissingAuthenticationHeaderException("Authorization header not found in request.");
-
-        if (!authorization.startsWith("Bearer "))
-            throw new MissingAuthenticationHeaderException("Authorization header is invalid.");
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String jsonWebToken = authorization.replace("Bearer ", "");
-        String username = jwtUtils.getUsernameFromToken(jsonWebToken);
+        String username;
 
-        if (username == null)
-            throw new InvalidJwtException("Invalid token.");
+        try {
+            username = jwtUtils.getUsernameFromToken(jsonWebToken);
+        } catch (Exception e) {
+            username = null;
+        }
+
+        if (username == null || SecurityContextHolder.getContext().getAuthentication() == null) {
+            doFilterInternal(request, response, filterChain);
+            return;
+        }
 
         UserDetails userDetails = userService.loadUserByUsername(username);
 
-        if (!jwtUtils.validateToken(jsonWebToken, userDetails))
-            throw new InvalidJwtException("Invalid JWToken.");
+        if (!jwtUtils.validateToken(jsonWebToken, userDetails)) {
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+            authentication.setDetails(authentication.getDetails());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(  userDetails.getUsername(),
-                                                                        userDetails.getPassword(),
-                                                                        userDetails.getAuthorities());
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }
 
