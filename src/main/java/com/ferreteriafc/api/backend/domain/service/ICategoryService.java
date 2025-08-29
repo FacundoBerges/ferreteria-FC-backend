@@ -2,8 +2,8 @@ package com.ferreteriafc.api.backend.domain.service;
 
 import java.util.List;
 
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
+import com.ferreteriafc.api.backend.domain.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveCategoryDTO;
 
 public interface ICategoryService {
 

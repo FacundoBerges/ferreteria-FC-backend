@@ -6,8 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import com.ferreteriafc.api.backend.domain.dto.UserDTO;
 import com.ferreteriafc.api.backend.persistence.entity.User;
-import com.ferreteriafc.api.backend.web.dto.UserDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {

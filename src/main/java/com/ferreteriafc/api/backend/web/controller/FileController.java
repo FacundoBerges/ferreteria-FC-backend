@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ferreteriafc.api.backend.domain.dto.response.ImageUploadDTO;
 import com.ferreteriafc.api.backend.domain.service.IFileService;
-import com.ferreteriafc.api.backend.web.dto.response.ImageUploadDTO;
 
 @RestController
 @RequestMapping("/images")

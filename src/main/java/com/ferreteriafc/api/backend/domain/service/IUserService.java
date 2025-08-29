@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.ferreteriafc.api.backend.web.dto.request.RegisterUserDTO;
-import com.ferreteriafc.api.backend.web.dto.UserDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.RegisterUserDTO;
+import com.ferreteriafc.api.backend.domain.dto.UserDTO;
 
 public interface IUserService extends UserDetailsService {
 

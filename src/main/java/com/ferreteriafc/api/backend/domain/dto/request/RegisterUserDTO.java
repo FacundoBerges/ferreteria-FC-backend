@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.web.dto.request;
+package com.ferreteriafc.api.backend.domain.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

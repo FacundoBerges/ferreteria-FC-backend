@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.ferreteriafc.api.backend.persistence.entity.Brand;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
+import com.ferreteriafc.api.backend.domain.dto.BrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveBrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveCategoryDTO;
 
 public class MockObjectFactory {
 

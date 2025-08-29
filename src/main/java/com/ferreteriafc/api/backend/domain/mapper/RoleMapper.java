@@ -5,8 +5,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import com.ferreteriafc.api.backend.domain.dto.RoleDTO;
 import com.ferreteriafc.api.backend.persistence.entity.Role;
-import com.ferreteriafc.api.backend.web.dto.RoleDTO;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {

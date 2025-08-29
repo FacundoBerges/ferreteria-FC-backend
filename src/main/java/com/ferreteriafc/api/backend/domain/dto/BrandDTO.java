@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.web.dto;
+package com.ferreteriafc.api.backend.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

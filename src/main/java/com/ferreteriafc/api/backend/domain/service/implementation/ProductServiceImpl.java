@@ -14,8 +14,8 @@ import com.ferreteriafc.api.backend.persistence.entity.Product;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 import com.ferreteriafc.api.backend.web.exception.EmptyListException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
-import com.ferreteriafc.api.backend.web.dto.ProductDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
+import com.ferreteriafc.api.backend.domain.dto.ProductDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveProductDTO;
 
 @Service
 public class ProductServiceImpl implements IProductService {

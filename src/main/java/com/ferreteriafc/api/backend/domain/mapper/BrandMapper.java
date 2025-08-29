@@ -7,9 +7,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.Mapping;
 
+import com.ferreteriafc.api.backend.domain.dto.BrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveBrandDTO;
 import com.ferreteriafc.api.backend.persistence.entity.Brand;
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 
 @Mapper(componentModel = "spring")
 public interface BrandMapper {

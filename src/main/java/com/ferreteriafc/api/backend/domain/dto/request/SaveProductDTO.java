@@ -1,4 +1,4 @@
-package com.ferreteriafc.api.backend.web.dto.request;
+package com.ferreteriafc.api.backend.domain.dto.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -11,9 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.ferreteriafc.api.backend.domain.dto.BrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.domain.utils.Constant;
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 
 @NoArgsConstructor @AllArgsConstructor @Data
 public class SaveProductDTO {

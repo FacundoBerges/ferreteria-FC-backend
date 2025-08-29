@@ -2,8 +2,8 @@ package com.ferreteriafc.api.backend.domain.service;
 
 import java.util.List;
 
-import com.ferreteriafc.api.backend.web.dto.ProductDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveProductDTO;
+import com.ferreteriafc.api.backend.domain.dto.ProductDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveProductDTO;
 
 public interface IProductService {
 

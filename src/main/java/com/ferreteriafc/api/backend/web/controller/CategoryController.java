@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ferreteriafc.api.backend.domain.dto.request.SaveCategoryDTO;
+import com.ferreteriafc.api.backend.domain.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.domain.service.ICategoryService;
-import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 
 @RestController
 @RequestMapping("/categories")

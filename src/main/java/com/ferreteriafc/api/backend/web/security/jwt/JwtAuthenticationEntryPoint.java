@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.ferreteriafc.api.backend.web.dto.response.ErrorDTO;
+import com.ferreteriafc.api.backend.domain.dto.response.ErrorDTO;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {

@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.mapstruct.*;
 
+import com.ferreteriafc.api.backend.domain.dto.request.SaveCategoryDTO;
+import com.ferreteriafc.api.backend.domain.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.persistence.entity.Category;
-import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {

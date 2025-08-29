@@ -8,8 +8,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.ferreteriafc.api.backend.web.dto.response.ErrorDTO;
-import com.ferreteriafc.api.backend.web.dto.response.ValidationErrorsDTO;
+import com.ferreteriafc.api.backend.domain.dto.response.ErrorDTO;
+import com.ferreteriafc.api.backend.domain.dto.response.ValidationErrorsDTO;
 import com.ferreteriafc.api.backend.web.exception.*;
 
 @RestControllerAdvice

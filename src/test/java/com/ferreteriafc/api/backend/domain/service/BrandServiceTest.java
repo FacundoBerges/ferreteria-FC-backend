@@ -23,8 +23,8 @@ import com.ferreteriafc.api.backend.domain.mapper.BrandMapper;
 import com.ferreteriafc.api.backend.domain.utils.MockObjectFactory;
 import com.ferreteriafc.api.backend.persistence.entity.Brand;
 import com.ferreteriafc.api.backend.persistence.repository.BrandRepository;
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.BrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveBrandDTO;
 
 @ExtendWith(MockitoExtension.class)
 public class BrandServiceTest {

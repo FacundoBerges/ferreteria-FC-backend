@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ferreteriafc.api.backend.domain.dto.BrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveBrandDTO;
 import com.ferreteriafc.api.backend.domain.service.IBrandService;
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
 
 @RestController
 @RequestMapping("/brands")

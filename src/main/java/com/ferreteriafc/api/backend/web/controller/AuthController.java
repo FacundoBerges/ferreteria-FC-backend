@@ -11,10 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import com.ferreteriafc.api.backend.domain.dto.request.LoginUserDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.RegisterUserDTO;
+import com.ferreteriafc.api.backend.domain.dto.response.AuthToken;
 import com.ferreteriafc.api.backend.domain.service.IUserService;
-import com.ferreteriafc.api.backend.web.dto.request.LoginUserDTO;
-import com.ferreteriafc.api.backend.web.dto.request.RegisterUserDTO;
-import com.ferreteriafc.api.backend.web.dto.response.AuthToken;
 import com.ferreteriafc.api.backend.web.security.jwt.JwtUtils;
 
 

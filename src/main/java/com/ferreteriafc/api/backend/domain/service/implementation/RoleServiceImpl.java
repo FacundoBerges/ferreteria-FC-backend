@@ -7,7 +7,7 @@ import com.ferreteriafc.api.backend.domain.mapper.RoleMapper;
 import com.ferreteriafc.api.backend.domain.service.IRoleService;
 import com.ferreteriafc.api.backend.persistence.entity.Role;
 import com.ferreteriafc.api.backend.persistence.repository.RoleRepository;
-import com.ferreteriafc.api.backend.web.dto.RoleDTO;
+import com.ferreteriafc.api.backend.domain.dto.RoleDTO;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
 
 @Service

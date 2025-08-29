@@ -18,8 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ferreteriafc.api.backend.domain.service.implementation.CategoryServiceImpl;
 import com.ferreteriafc.api.backend.domain.utils.MockObjectFactory;
-import com.ferreteriafc.api.backend.web.dto.CategoryDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveCategoryDTO;
+import com.ferreteriafc.api.backend.domain.dto.CategoryDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveCategoryDTO;
 
 @ExtendWith(MockitoExtension.class)
 public class CategoryControllerTest {

@@ -1,16 +1,14 @@
-package com.ferreteriafc.api.backend.web.dto.response;
-
-import java.util.Map;
+package com.ferreteriafc.api.backend.domain.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-public class ValidationErrorsDTO {
+public class ErrorDTO {
 
     private Integer status;
     private String error;
-    private Map<String, String> errors;
+    private String message;
 
 }

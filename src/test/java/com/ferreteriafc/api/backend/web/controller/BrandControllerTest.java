@@ -19,8 +19,8 @@ import org.mockito.Mock;
 
 import com.ferreteriafc.api.backend.domain.service.implementation.BrandServiceImpl;
 import com.ferreteriafc.api.backend.domain.utils.MockObjectFactory;
-import com.ferreteriafc.api.backend.web.dto.BrandDTO;
-import com.ferreteriafc.api.backend.web.dto.request.SaveBrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.BrandDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveBrandDTO;
 
 @ExtendWith(MockitoExtension.class)
 public class BrandControllerTest {
