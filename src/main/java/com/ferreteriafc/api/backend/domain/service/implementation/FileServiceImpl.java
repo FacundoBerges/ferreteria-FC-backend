@@ -23,7 +23,6 @@ public class FileServiceImpl implements IFileService {
         this.env = env;
     }
 
-
     @Override
     public String uploadFile(MultipartFile file) {
         if (file == null || file.isEmpty())
@@ -65,7 +64,6 @@ public class FileServiceImpl implements IFileService {
         Path filePath = uploadPath.resolve(fileName);
 
         try {
-            System.out.println(filePath);
             file = Files.readAllBytes(filePath);
         }
         catch (NoSuchFileException e) {
