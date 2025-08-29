@@ -21,7 +21,7 @@ public class RegisterUserDTO {
 
     @NotBlank(message = "Password cannot be blank nor null.")
     @Size(min = Constant.PASSWORD_MIN_LENGTH, max = Constant.PASSWORD_MAX_LENGTH, message = "Password length must be between {min} and {max}.")
-    @Pattern(regexp = Constant.PASSWORD_REGEX_PATTERN)
+    @Pattern(regexp = Constant.PASSWORD_REGEX_PATTERN, message = "Password must contain at least a lowercase character (a-z), an uppercase character (A-Z) and a number (0-9).")
     private String password;
 
     @NotBlank(message = "Email cannot be blank nor null.")
