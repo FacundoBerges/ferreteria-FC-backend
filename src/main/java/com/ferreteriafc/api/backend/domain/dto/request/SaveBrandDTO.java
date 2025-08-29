@@ -15,7 +15,7 @@ import com.ferreteriafc.api.backend.domain.utils.Constant;
 public class SaveBrandDTO {
 
     @JsonProperty("brand_name")
-    @NotBlank(message = "Name cannot be blank.")
+    @NotBlank(message = "Name cannot be blank. Field name: 'brand_name'")
     @Size(min = 1, max = Constant.BRANDS_NAME_MAX_LENGTH, message = "Name length must be between {min} and {max} characters.")
     private String brandName;
 

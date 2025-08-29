@@ -15,7 +15,7 @@ import com.ferreteriafc.api.backend.domain.utils.Constant;
 public class SaveCategoryDTO {
 
     @JsonProperty("category_name")
-    @NotBlank(message = "Name cannot be blank.")
+    @NotBlank(message = "Name cannot be blank. Field name: 'category_name'")
     @Size(min = 1, max = Constant.CATEGORIES_NAME_MAX_LENGTH, message = "Name length must be between {min} and {max} characters.")
     private String categoryName;
 
