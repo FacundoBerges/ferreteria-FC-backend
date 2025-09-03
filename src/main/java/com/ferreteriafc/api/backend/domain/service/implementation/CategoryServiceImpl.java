@@ -50,14 +50,17 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryDTO findById(Integer id) {
+    public Category findById(Integer id) {
         validateId(id);
 
-        Category category = categoryRepository
+        return categoryRepository
                                 .findById(id)
                                 .orElseThrow(() -> new NotFoundException("Category does not exist."));
+    }
 
-        return categoryMapper.toCategoryDTO( category );
+    @Override
+    public CategoryDTO toDto(Category category) {
+        return categoryMapper.toCategoryDTO(category);
     }
 
     @Override

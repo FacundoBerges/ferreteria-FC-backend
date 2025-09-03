@@ -29,7 +29,7 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable Integer id) {
-        return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.toDto(categoryService.findById(id)), HttpStatus.OK);
     }
 
     @PostMapping()
