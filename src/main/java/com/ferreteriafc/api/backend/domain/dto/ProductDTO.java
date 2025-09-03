@@ -32,7 +32,7 @@ public class ProductDTO {
     @NotBlank(message = "Code cannot be blank. Field name: 'product_code'")
     private String code;
 
-    @JsonProperty("product_image_url")
+    @JsonProperty("product_image")
     private String imageUrl;
 
     @JsonProperty("product_brand")
