@@ -29,7 +29,7 @@ public class BrandController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getBrandById(@PathVariable Integer id) {
-        return new ResponseEntity<>(brandService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(brandService.toDto(brandService.findById(id)), HttpStatus.OK);
     }
 
     @PostMapping()
