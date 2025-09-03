@@ -18,7 +18,7 @@ public class RoleDTO {
     private Integer id;
 
     @JsonProperty(value = "role_name")
-    @NotNull(message = "Role name cannot be null.")
+    @NotNull(message = "Role name cannot be null. Field name: 'role_name'")
     @Size(min = 3, message = "Role name length must be higher than {min}.")
     private String roleName;
 

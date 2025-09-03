@@ -2,6 +2,7 @@ package com.ferreteriafc.api.backend.domain.mapper;
 
 import java.util.List;
 
+import com.ferreteriafc.api.backend.domain.dto.request.UpdateProductDTO;
 import org.mapstruct.*;
 
 import com.ferreteriafc.api.backend.domain.dto.ProductDTO;
@@ -28,8 +29,8 @@ public interface ProductMapper {
         @Mapping(source = "code", target = "code"),
         @Mapping(source = "description", target = "description"),
         @Mapping(source = "imageUrl", target = "imgUrl"),
-        @Mapping(source = "brandDTO", target = "brand"),
-        @Mapping(source = "categoryDTO", target = "category", qualifiedByName = "toCategory"),
+        @Mapping(target = "brand", ignore = true),
+        @Mapping(target = "category", ignore = true),
         @Mapping(target = "id", ignore = true)
     })
     Product toProduct(SaveProductDTO saveProductDTO);
@@ -39,8 +40,18 @@ public interface ProductMapper {
         @Mapping(source = "code", target = "code"),
         @Mapping(source = "description", target = "description"),
         @Mapping(source = "imageUrl", target = "imgUrl"),
-        @Mapping(source = "brandDTO", target = "brand"),
-        @Mapping(source = "categoryDTO", target = "category", qualifiedByName = "toCategory"),
+        @Mapping(target = "brand", ignore = true),
+        @Mapping(target = "category", ignore = true),
+    })
+    Product toProduct(UpdateProductDTO updateProductDTO);
+
+    @Mappings({
+        @Mapping(source = "id", target = "id"),
+        @Mapping(source = "code", target = "code"),
+        @Mapping(source = "description", target = "description"),
+        @Mapping(source = "imageUrl", target = "imgUrl"),
+        @Mapping(target = "brand", ignore = true),
+        @Mapping(target = "category", ignore = true),
     })
     Product toProduct(ProductDTO product);
 

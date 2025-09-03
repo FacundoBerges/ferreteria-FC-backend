@@ -1,5 +1,6 @@
 package com.ferreteriafc.api.backend.web.controller;
 
+import com.ferreteriafc.api.backend.domain.dto.request.UpdateProductDTO;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable Integer id, @RequestBody @Valid ProductDTO product) {
+    public ResponseEntity<?> updateProduct(@PathVariable Integer id, @RequestBody @Valid UpdateProductDTO product) {
         return new ResponseEntity<>(productService.update(id, product), HttpStatus.OK);
     }
 

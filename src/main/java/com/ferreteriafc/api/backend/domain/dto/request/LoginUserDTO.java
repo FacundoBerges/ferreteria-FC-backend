@@ -18,7 +18,7 @@ import com.ferreteriafc.api.backend.domain.utils.Constant;
 public class LoginUserDTO {
 
     @JsonProperty(value = "username_or_email")
-    @NotBlank(message = "Username or email cannot be blank nor null.")
+    @NotBlank(message = "Username or email cannot be blank nor null. Field name: 'username_or_email'")
     @Size(min = Constant.USERNAME_MIN_LENGTH, max = Constant.USERNAME_MAX_LENGTH, message = "Username or email length must be between {min} and {max}.")
     private String usernameOrEmail;
 

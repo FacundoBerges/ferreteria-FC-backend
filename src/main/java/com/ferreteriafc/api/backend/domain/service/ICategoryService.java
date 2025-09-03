@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ferreteriafc.api.backend.domain.dto.CategoryDTO;
 import com.ferreteriafc.api.backend.domain.dto.request.SaveCategoryDTO;
+import com.ferreteriafc.api.backend.persistence.entity.Category;
 
 public interface ICategoryService {
 
@@ -11,7 +12,9 @@ public interface ICategoryService {
 
     List<CategoryDTO> findAll();
 
-    CategoryDTO findById(Integer id);
+    Category findById(Integer id);
+
+    CategoryDTO toDto(Category category);
 
     CategoryDTO update(Integer id, CategoryDTO categoryDto);
 

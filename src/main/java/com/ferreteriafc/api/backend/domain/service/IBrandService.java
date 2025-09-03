@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ferreteriafc.api.backend.domain.dto.BrandDTO;
 import com.ferreteriafc.api.backend.domain.dto.request.SaveBrandDTO;
+import com.ferreteriafc.api.backend.persistence.entity.Brand;
 
 public interface IBrandService {
 
@@ -11,7 +12,9 @@ public interface IBrandService {
 
     List<BrandDTO> findAll();
 
-    BrandDTO findById(Integer id);
+    Brand findById(Integer id);
+
+    BrandDTO toDto(Brand brand);
 
     BrandDTO update(Integer id, BrandDTO brandDTO);
 

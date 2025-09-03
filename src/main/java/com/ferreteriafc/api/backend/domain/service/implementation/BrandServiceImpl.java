@@ -51,13 +51,16 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public BrandDTO findById(Integer id) {
+    public Brand findById(Integer id) {
         validateId(id);
 
-        Brand brand = brandRepository
+        return brandRepository
                         .findById(id)
                         .orElseThrow( () -> new NotFoundException("Brand does not exist."));
+    }
 
+    @Override
+    public BrandDTO toDto(Brand brand) {
         return brandMapper.toBrandDTO(brand);
     }
 

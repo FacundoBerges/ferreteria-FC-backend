@@ -67,12 +67,11 @@ public class JwtUtils {
                 .compact();
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
+    public boolean validateToken(String token) {
         try {
             Jwts.parser()
                     .clockSkewSeconds(10L)
                     .requireIssuer(ISSUER)
-                    .requireSubject(userDetails.getUsername())
                     .verifyWith(SECRET_KEY)
                     .build()
                     .parseSignedClaims(token);
@@ -85,6 +84,7 @@ public class JwtUtils {
 
     public String getUsernameFromToken(String token) {
         return Jwts.parser()
+                .verifyWith(SECRET_KEY)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
