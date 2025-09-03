@@ -1,9 +1,15 @@
 package com.ferreteriafc.api.backend.domain.service.implementation;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.UUID;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -12,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ferreteriafc.api.backend.domain.service.IFileService;
 import com.ferreteriafc.api.backend.web.exception.InvalidImageFileException;
+
 
 @Service
 public class FileServiceImpl implements IFileService {
@@ -28,32 +35,48 @@ public class FileServiceImpl implements IFileService {
         if (file == null || file.isEmpty())
             throw new InvalidImageFileException("No file provided.");
 
-        String fileName = file.getOriginalFilename();
+        String originalFilename = file.getOriginalFilename();
 
-        if (fileName == null || fileName.isEmpty() || ! isValidImage(fileName))
+        if (originalFilename == null || originalFilename.isEmpty())
+            throw new InvalidImageFileException("Invalid file name provided.");
+
+        if (!isValidImage(originalFilename))
             throw new InvalidImageFileException("File is not a valid image. Supported extensions are: jpg, jpeg, png, webp, svg.");
 
-        String uploadDirectory = env.getProperty("upload.dir");
-
-        if (uploadDirectory == null || uploadDirectory.isEmpty())
-            throw new InvalidImageFileException("No upload path provided.");
-
-        Path uploadPath = Path.of(uploadDirectory);
-
         try {
+            byte[] fileBytes = file.getBytes();
+
+            if (!isValidImageContent(fileBytes))
+                throw new InvalidImageFileException("File is not a valid image content.");
+
+            String uploadDirectory = env.getProperty("upload.dir");
+
+            if (uploadDirectory == null || uploadDirectory.isEmpty())
+                throw new InvalidImageFileException("No upload path provided.");
+
+            Path uploadPath = Path.of(uploadDirectory);
             Path uploadDirectoryPath = Files.createDirectories(uploadPath);
+
+            String fileExtension = getFileExtension(originalFilename);
+            String fileName = UUID.randomUUID() + (fileExtension.isEmpty() ? "" : "." + fileExtension);
             Path filePath = uploadDirectoryPath.resolve(fileName);
 
-            Files.write(filePath, file.getBytes());
+            Files.write(filePath, fileBytes);
+
+            return fileName;
         } catch (IOException e) {
             throw new InvalidImageFileException("File could not be uploaded: " + e.getMessage());
         }
-
-        return fileName;
     }
 
     @Override
     public byte[] downloadFile(String fileName) {
+        if (fileName == null || fileName.isEmpty())
+            throw new InvalidImageFileException("Invalid file name provided.");
+
+        if (fileName.contains("..") || fileName.contains("/") || fileName.contains("\\"))
+            throw new InvalidImageFileException("Invalid file name provided.");
+
         byte[] file;
         String uploadDirectory = env.getProperty("upload.dir");
 
@@ -64,6 +87,9 @@ public class FileServiceImpl implements IFileService {
         Path filePath = uploadPath.resolve(fileName);
 
         try {
+            if (!Files.exists(filePath) || !filePath.normalize().startsWith(uploadPath.normalize()))
+                throw new InvalidImageFileException("File not found or access denied.");
+
             file = Files.readAllBytes(filePath);
         }
         catch (NoSuchFileException e) {
@@ -80,18 +106,34 @@ public class FileServiceImpl implements IFileService {
         if (originalFilename == null || originalFilename.isEmpty())
             return false;
 
-        int index = originalFilename.lastIndexOf(".");
+        String fileExtension = getFileExtension(originalFilename).toLowerCase();
 
-        if (index == -1)
+        if (fileExtension.isEmpty())
             return false;
 
-        String fileExtension = originalFilename.substring(index).toLowerCase();
+        return  ( fileExtension.equals("png")
+                || fileExtension.equals("jpeg")
+                || fileExtension.equals("jpg")
+                || fileExtension.equals("svg")
+                || fileExtension.equals("webp") );
+    }
 
-        return  ( fileExtension.endsWith("png")
-                || fileExtension.endsWith("jpeg")
-                || fileExtension.endsWith("jpg")
-                || fileExtension.endsWith("svg")
-                || fileExtension.endsWith("webp") );
+    private boolean isValidImageContent(byte[] fileBytes) {
+        try (InputStream inputStream = new ByteArrayInputStream(fileBytes)) {
+            BufferedImage image = ImageIO.read(inputStream);
+
+            return image != null;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    private String getFileExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf('.');
+
+        return lastDotIndex > 0
+                ? fileName.substring(lastDotIndex + 1).toLowerCase()
+                : "";
     }
 
 }
