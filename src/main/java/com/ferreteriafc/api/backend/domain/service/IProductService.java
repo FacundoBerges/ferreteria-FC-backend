@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ferreteriafc.api.backend.domain.dto.ProductDTO;
 import com.ferreteriafc.api.backend.domain.dto.request.SaveProductDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.UpdateProductDTO;
 
 public interface IProductService {
 
@@ -13,7 +14,7 @@ public interface IProductService {
 
     ProductDTO findById(Integer id);
 
-    ProductDTO update(Integer id, ProductDTO productDTO);
+    ProductDTO update(Integer id, UpdateProductDTO updateProductDTO);
 
     void delete(Integer id);
 

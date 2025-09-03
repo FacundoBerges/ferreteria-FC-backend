@@ -7,26 +7,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
+import com.ferreteriafc.api.backend.domain.dto.ProductDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.SaveProductDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.UpdateProductDTO;
 import com.ferreteriafc.api.backend.domain.mapper.ProductMapper;
 import com.ferreteriafc.api.backend.domain.service.IProductService;
-import com.ferreteriafc.api.backend.persistence.repository.ProductRepository;
+import com.ferreteriafc.api.backend.persistence.entity.Brand;
+import com.ferreteriafc.api.backend.persistence.entity.Category;
 import com.ferreteriafc.api.backend.persistence.entity.Product;
+import com.ferreteriafc.api.backend.persistence.repository.ProductRepository;
 import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
 import com.ferreteriafc.api.backend.web.exception.EmptyListException;
 import com.ferreteriafc.api.backend.web.exception.NotFoundException;
-import com.ferreteriafc.api.backend.domain.dto.ProductDTO;
-import com.ferreteriafc.api.backend.domain.dto.request.SaveProductDTO;
 
 @Service
 public class ProductServiceImpl implements IProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final BrandServiceImpl brandService;
+    private final CategoryServiceImpl categoryService;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+    public ProductServiceImpl(ProductRepository productRepository,
+                              ProductMapper productMapper,
+                              BrandServiceImpl brandService,
+                              CategoryServiceImpl categoryService) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
+        this.brandService = brandService;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -37,6 +47,14 @@ public class ProductServiceImpl implements IProductService {
             throw new AlreadyExistException("Product already exists.");
 
         Product entityProduct = productMapper.toProduct(saveProductDTO);
+
+        Category category = categoryService.findById(saveProductDTO.getCategoryId());
+        entityProduct.setCategory(category);
+
+        if (saveProductDTO.getBrandId() != null) {
+            Brand brand = brandService.findById(saveProductDTO.getBrandId());
+            entityProduct.setBrand(brand);
+        }
 
         return productMapper.toProductDTO( productRepository.save(entityProduct) );
     }
@@ -63,18 +81,26 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ProductDTO update(Integer id, ProductDTO productDTO) {
+    public ProductDTO update(Integer id, UpdateProductDTO updateProductDTO) {
         validateId(id);
 
         Product repositoryProduct = getProductFromRepository(id)
                                         .orElseThrow(() -> new NotFoundException("Product not found."));
-        Product toUpdateProduct = productMapper.toProduct(productDTO);
 
-        repositoryProduct.setCode(toUpdateProduct.getCode());
-        repositoryProduct.setDescription(toUpdateProduct.getDescription());
-        repositoryProduct.setImgUrl(toUpdateProduct.getImgUrl());
-        repositoryProduct.setBrand(toUpdateProduct.getBrand());
-        repositoryProduct.setCategory(toUpdateProduct.getCategory());
+        repositoryProduct.setCode(updateProductDTO.getCode());
+        repositoryProduct.setDescription(updateProductDTO.getDescription());
+
+        if (updateProductDTO.getImageUrl() != null &&  !updateProductDTO.getImageUrl().isEmpty()) {
+            repositoryProduct.setImgUrl(updateProductDTO.getImageUrl());
+        }
+
+        Category category = categoryService.findById(updateProductDTO.getCategoryId());
+        repositoryProduct.setCategory(category);
+
+        if (updateProductDTO.getBrandId() != null) {
+            Brand brand = brandService.findById(updateProductDTO.getBrandId());
+            repositoryProduct.setBrand(brand);
+        }
 
         return productMapper.toProductDTO( productRepository.save(repositoryProduct) );
     }
