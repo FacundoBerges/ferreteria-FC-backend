@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.ferreteriafc.api.backend.domain.dto.request.ChangeUserPasswordDTO;
 import com.ferreteriafc.api.backend.domain.dto.request.RegisterUserDTO;
+import com.ferreteriafc.api.backend.domain.dto.response.MessageDTO;
 import com.ferreteriafc.api.backend.domain.dto.UserDTO;
 
 public interface IUserService extends UserDetailsService {
@@ -16,6 +18,7 @@ public interface IUserService extends UserDetailsService {
     UserDTO findByUsername(String username);
     UserDTO findByEmail(String email);
     UserDTO update(Integer id, UserDTO userDTO);
+    MessageDTO changePassword(UserDetails userDetails, String username, ChangeUserPasswordDTO changeUserPasswordDTO);
     void delete(Integer id);
 
 }
