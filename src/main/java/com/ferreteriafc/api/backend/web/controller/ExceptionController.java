@@ -93,4 +93,28 @@ public class ExceptionController {
         return new ResponseEntity<>(response, httpStatus);
     }
 
+    @ExceptionHandler(exception = ForbiddenException.class)
+    public ResponseEntity<?> handleForbiddenException(ForbiddenException ex){
+        var httpStatus = HttpStatus.FORBIDDEN;
+        var response = new ErrorDTO(httpStatus.value(), httpStatus.getReasonPhrase(), ex.getMessage());
+
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @ExceptionHandler(exception = PasswordConfirmationMismatchedException.class)
+    public ResponseEntity<?> handleMismatchedPassword(PasswordConfirmationMismatchedException ex){
+        var httpStatus = HttpStatus.BAD_REQUEST;
+        var response = new ErrorDTO(httpStatus.value(), httpStatus.getReasonPhrase(), ex.getMessage());
+
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @ExceptionHandler(exception = InvalidCredentialsException.class)
+    public ResponseEntity<?> handleInvalidCredentials(InvalidCredentialsException ex){
+        var httpStatus = HttpStatus.UNAUTHORIZED;
+        var response = new ErrorDTO(httpStatus.value(), httpStatus.getReasonPhrase(), ex.getMessage());
+
+        return new ResponseEntity<>(response, httpStatus);
+    }
+
 }

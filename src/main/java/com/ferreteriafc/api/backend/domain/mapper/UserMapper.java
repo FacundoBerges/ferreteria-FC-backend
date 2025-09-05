@@ -16,6 +16,8 @@ public interface UserMapper {
         @Mapping(source = "id", target = "id"),
         @Mapping(source = "email", target = "email"),
         @Mapping(source = "username", target = "username"),
+        @Mapping(source = "locked", target = "locked"),
+        @Mapping(source = "disabled", target = "disabled")
     })
     UserDTO toUserDTO(User user);
 

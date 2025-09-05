@@ -10,17 +10,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ferreteriafc.api.backend.domain.dto.request.RegisterUserDTO;
+import com.ferreteriafc.api.backend.domain.dto.request.ChangeUserPasswordDTO;
+import com.ferreteriafc.api.backend.domain.dto.response.MessageDTO;
+import com.ferreteriafc.api.backend.domain.dto.UserDTO;
 import com.ferreteriafc.api.backend.domain.mapper.UserMapper;
 import com.ferreteriafc.api.backend.domain.service.IRoleService;
 import com.ferreteriafc.api.backend.domain.service.IUserService;
 import com.ferreteriafc.api.backend.persistence.entity.Role;
 import com.ferreteriafc.api.backend.persistence.entity.User;
 import com.ferreteriafc.api.backend.persistence.repository.UserRepository;
-import com.ferreteriafc.api.backend.domain.dto.request.RegisterUserDTO;
-import com.ferreteriafc.api.backend.domain.dto.UserDTO;
-import com.ferreteriafc.api.backend.web.exception.AlreadyExistException;
-import com.ferreteriafc.api.backend.web.exception.EmptyListException;
-import com.ferreteriafc.api.backend.web.exception.NotFoundException;
+import com.ferreteriafc.api.backend.web.exception.*;
 
 import static com.ferreteriafc.api.backend.domain.utils.Validation.validateId;
 
@@ -164,13 +164,41 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public MessageDTO changePassword(UserDetails userDetails, String username, ChangeUserPasswordDTO changeUserPasswordDTO) {
+        if (changeUserPasswordDTO.getOldPassword().equals(changeUserPasswordDTO.getNewPassword()))
+            throw new AlreadyExistException("Old password matches new password");
+
+        if (! changeUserPasswordDTO.getNewPassword().equals(changeUserPasswordDTO.getConfirmNewPassword()) )
+            throw new PasswordConfirmationMismatchedException("New password doesn't match confirmation password");
+
+        if (!userDetails.getUsername().equals(username))
+            throw new ForbiddenException("User not allowed to change password.");
+
+        User user = userRepository
+                        .findByUsername(userDetails.getUsername())
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + userDetails.getUsername()));
+
+        if ( ! passwordEncoder.matches(changeUserPasswordDTO.getOldPassword(), user.getHashedPassword()) )
+            throw new InvalidCredentialsException("Wrong old password");
+
+        String newHashedPassword = this.passwordEncoder.encode(changeUserPasswordDTO.getNewPassword());
+        user.setHashedPassword(newHashedPassword);
+
+        userRepository.save(user);
+
+        return new MessageDTO("Password changed successfully.");
+    }
+
+    @Override
     public void delete(Integer id) {
         validateId(id);
 
-        if (!userRepository.existsById(id))
-            throw new NotFoundException("User not found with id: " + id);
+        User user = userRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NotFoundException("User not found with id: " + id));
+        user.setDisabled(true);
 
-        userRepository.deleteById(id);
+        userRepository.save(user);
     }
 
 }
