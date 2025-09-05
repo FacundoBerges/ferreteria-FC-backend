@@ -8,20 +8,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import com.ferreteriafc.api.backend.domain.dto.request.ChangeUserPasswordDTO;
 import com.ferreteriafc.api.backend.domain.dto.request.LoginUserDTO;
 import com.ferreteriafc.api.backend.domain.dto.request.RegisterUserDTO;
 import com.ferreteriafc.api.backend.domain.dto.response.AuthToken;
 import com.ferreteriafc.api.backend.domain.service.IUserService;
 import com.ferreteriafc.api.backend.web.security.jwt.JwtUtils;
 
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     private final AuthenticationManager authenticationManager;
     private final IUserService userService;
     private final JwtUtils jwtUtils;
@@ -50,6 +50,17 @@ public class AuthController {
         AuthToken authToken = new AuthToken(jwtUtils.generateToken(userDetails));
 
         return new ResponseEntity<>(authToken, HttpStatus.OK);
+    }
+
+    @PutMapping("/change-password/{username}")
+    public ResponseEntity<?> changePassword(@PathVariable String username, @RequestBody @Valid ChangeUserPasswordDTO changeUserPasswordDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof UserDetails userDetails)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(userService.changePassword(userDetails, username, changeUserPasswordDTO), HttpStatus.OK);
     }
 
 }
