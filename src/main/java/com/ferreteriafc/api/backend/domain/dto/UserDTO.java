@@ -25,8 +25,10 @@ public class UserDTO {
     @Email(regexp = Constant.EMAIL_REGEX_PATTERN, message = "Email format is invalid.")
     private String email;
 
+    @NotNull(message = "Locked cannot be null (should be a boolean value).")
     private Boolean locked;
 
+    @NotNull(message = "Locked cannot be null (should be a boolean value).")
     private Boolean disabled;
 
 }
