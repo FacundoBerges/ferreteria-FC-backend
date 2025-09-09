@@ -107,6 +107,32 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public MessageDTO changePassword(UserDetails userDetails, String username, ChangeUserPasswordDTO changeUserPasswordDTO) {
+        if (changeUserPasswordDTO.getOldPassword().equals(changeUserPasswordDTO.getNewPassword()))
+            throw new AlreadyExistException("Old password matches new password");
+
+        if (! changeUserPasswordDTO.getNewPassword().equals(changeUserPasswordDTO.getConfirmNewPassword()) )
+            throw new PasswordConfirmationMismatchedException("New password doesn't match confirmation password");
+
+        if (!userDetails.getUsername().equals(username))
+            throw new ForbiddenException("User not allowed to change password.");
+
+        User user = userRepository
+                .findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + userDetails.getUsername()));
+
+        if ( ! passwordEncoder.matches(changeUserPasswordDTO.getOldPassword(), user.getHashedPassword()) )
+            throw new InvalidCredentialsException("Wrong old password");
+
+        String newHashedPassword = this.passwordEncoder.encode(changeUserPasswordDTO.getNewPassword());
+        user.setHashedPassword(newHashedPassword);
+
+        userRepository.save(user);
+
+        return new MessageDTO("Password changed successfully.");
+    }
+
+    @Override
     public List<UserDTO> findAll() {
         List<User> users = userRepository.findAll();
 
@@ -128,21 +154,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserDTO findByUsername(String username) {
-        User user = userRepository
-                        .findByUsername(username)
-                        .orElseThrow(() -> new NotFoundException("User not found with username: " + username));
+    public UserDTO save(RegisterUserDTO userDTO) {
+        UserDetails userDetails = signUp(userDTO);
 
-        return userMapper.toUserDTO(user);
-    }
+        User savedUser = userRepository
+                            .findByUsername(userDetails.getUsername())
+                            .orElseThrow(() -> new UsernameNotFoundException("Username could not be saved."));
 
-    @Override
-    public UserDTO findByEmail(String email) {
-        User user = userRepository
-                        .findByEmail(email)
-                        .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
-
-        return userMapper.toUserDTO(user);
+        return userMapper.toUserDTO(savedUser);
     }
 
     @Override
@@ -161,32 +180,6 @@ public class UserServiceImpl implements IUserService {
         User savedUser = userRepository.save(user);
 
         return userMapper.toUserDTO(savedUser);
-    }
-
-    @Override
-    public MessageDTO changePassword(UserDetails userDetails, String username, ChangeUserPasswordDTO changeUserPasswordDTO) {
-        if (changeUserPasswordDTO.getOldPassword().equals(changeUserPasswordDTO.getNewPassword()))
-            throw new AlreadyExistException("Old password matches new password");
-
-        if (! changeUserPasswordDTO.getNewPassword().equals(changeUserPasswordDTO.getConfirmNewPassword()) )
-            throw new PasswordConfirmationMismatchedException("New password doesn't match confirmation password");
-
-        if (!userDetails.getUsername().equals(username))
-            throw new ForbiddenException("User not allowed to change password.");
-
-        User user = userRepository
-                        .findByUsername(userDetails.getUsername())
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + userDetails.getUsername()));
-
-        if ( ! passwordEncoder.matches(changeUserPasswordDTO.getOldPassword(), user.getHashedPassword()) )
-            throw new InvalidCredentialsException("Wrong old password");
-
-        String newHashedPassword = this.passwordEncoder.encode(changeUserPasswordDTO.getNewPassword());
-        user.setHashedPassword(newHashedPassword);
-
-        userRepository.save(user);
-
-        return new MessageDTO("Password changed successfully.");
     }
 
     @Override
