@@ -13,12 +13,11 @@ import com.ferreteriafc.api.backend.domain.dto.UserDTO;
 public interface IUserService extends UserDetailsService {
 
     UserDetails signUp(RegisterUserDTO userDTO);
+    MessageDTO changePassword(UserDetails userDetails, String username, ChangeUserPasswordDTO changeUserPasswordDTO);
     List<UserDTO> findAll();
     UserDTO findById(Integer id);
-    UserDTO findByUsername(String username);
-    UserDTO findByEmail(String email);
+    UserDTO save(RegisterUserDTO userDTO);
     UserDTO update(Integer id, UserDTO userDTO);
-    MessageDTO changePassword(UserDetails userDetails, String username, ChangeUserPasswordDTO changeUserPasswordDTO);
     void delete(Integer id);
 
 }
