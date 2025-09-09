@@ -18,6 +18,6 @@ public class Constant {
 
     public static final int EMAIL_MAX_LENGTH = 50;
     public static final int EMAIL_MIN_LENGTH = 2;
-    public static final String EMAIL_REGEX_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$";
+    public static final String EMAIL_REGEX_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}(?:\\\\.[a-zA-Z]{2,})?$";
 
 }
