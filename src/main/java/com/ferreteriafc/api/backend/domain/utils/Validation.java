@@ -4,6 +4,8 @@ import com.ferreteriafc.api.backend.web.exception.InvalidIdException;
 
 public class Validation {
 
+    private Validation() {}
+
     private static boolean objectIsNull(Object obj) {
         return obj == null;
     }
