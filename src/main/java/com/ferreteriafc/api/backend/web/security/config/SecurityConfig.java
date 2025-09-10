@@ -21,6 +21,10 @@ import com.ferreteriafc.api.backend.web.security.jwt.JwtAuthenticationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private static final String PRODUCTS_PATH = "/products/**";
+    private static final String BRANDS_PATH = "/brands/**";
+    private static final String CATEGORIES_PATH = "/categories/**";
+    private static final String IMAGES_PATH = "/images/**";
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,20 +45,20 @@ public class SecurityConfig {
         httpSecurity
             .csrf(AbstractHttpConfigurer::disable)
             .cors(Customizer.withDefaults())
-            .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests((authorizationManagerRequestMatcherRegistry) ->
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/auth/login", "/auth/register")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products/**", "/brands/**", "/categories/**", "/images/**")
+                        .requestMatchers(HttpMethod.GET, PRODUCTS_PATH, BRANDS_PATH, CATEGORIES_PATH, IMAGES_PATH)
                         .permitAll()
                         .requestMatchers(HttpMethod.PUT, "/auth/change-password/**")
                         .authenticated()
-                        .requestMatchers(HttpMethod.POST, "/products/**", "/brands/**", "/categories/**", "/images/**")
+                        .requestMatchers(HttpMethod.POST, PRODUCTS_PATH, BRANDS_PATH, CATEGORIES_PATH, IMAGES_PATH)
                         .authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/products/**", "/brands/**", "/categories/**", "/images/**")
+                        .requestMatchers(HttpMethod.PUT, PRODUCTS_PATH, BRANDS_PATH, CATEGORIES_PATH, IMAGES_PATH)
                         .authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/products/**", "/brands/**", "/categories/**", "/images/**")
+                        .requestMatchers(HttpMethod.DELETE, PRODUCTS_PATH, BRANDS_PATH, CATEGORIES_PATH, IMAGES_PATH)
                         .authenticated()
                         .requestMatchers("/users/**")
                         .hasRole("ADMIN")
